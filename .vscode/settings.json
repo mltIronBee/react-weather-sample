@@ -1,0 +1,7 @@
+{
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode"
+}
