@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import store from "@redux/store";
 import App from "@src/App";
 import reportWebVitals from "@src/reportWebVitals";
@@ -8,6 +9,7 @@ import "@src/index.css";
 
 render(
 	<React.StrictMode>
+		<CssBaseline />
 		<Provider store={store}>
 			<App />
 		</Provider>
