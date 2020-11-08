@@ -23,7 +23,8 @@
 			"@components/*": ["src/components/*"],
 			"@containers/*": ["src/containers/*"],
 			"@services/*": ["src/services/*"],
-			"@redux/*": ["src/redux/*"]
+			"@redux/*": ["src/redux/*"],
+			"@utils/*": ["src/utils"]
 		}
 	},
 	"include": ["src"]
