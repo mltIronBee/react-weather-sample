@@ -2,8 +2,10 @@ import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { ThemeProvider } from "@material-ui/core";
 import store from "@redux/store";
 import App from "@src/App";
+import theme from "@src/theme";
 import reportWebVitals from "@src/reportWebVitals";
 import "@src/index.css";
 
@@ -11,7 +13,9 @@ render(
 	<React.StrictMode>
 		<CssBaseline />
 		<Provider store={store}>
-			<App />
+			<ThemeProvider theme={theme}>
+				<App />
+			</ThemeProvider>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById("root"),
