@@ -19,7 +19,7 @@ module.exports = {
 	moduleNameMapper: {
 		"^react-native$": "react-native-web",
 		"^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-		"^@src/(.*)$": "<rootDir>/$1",
+		"^@src/(.*)$": "<rootDir>/src/$1",
 		"^@components/(.*)$": "<rootDir>/src/components/$1",
 		"^@containers/(.*)$": "<rootDir>/src/containers/$1",
 		"^@redux/(.*)$": "<rootDir>/src/redux/$1",
