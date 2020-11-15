@@ -1,11 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { weatherReducer } from "@redux/reducers";
-import { IWeatherState } from "@src/redux/reducers/weather";
+import { configureStore, ThunkAction } from "@reduxjs/toolkit";
+import { rootReducer, IAppState, AppActions } from "@redux/reducers";
 
-export interface IAppState {
-	weather: IWeatherState;
-}
+export type AppThunk<T = any> = ThunkAction<T, IAppState, unknown, AppActions>;
 
 export default configureStore<IAppState>({
-	reducer: { weather: weatherReducer },
+	reducer: rootReducer,
 });

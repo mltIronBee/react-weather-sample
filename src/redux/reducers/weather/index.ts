@@ -1,4 +1,6 @@
-import { createReducer } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AppThunk } from "@redux/store";
+import { getWeatherForecast } from "@services/weather";
 
 export interface IDailyForecast {
 	readonly minTemperature: number;
@@ -18,4 +20,42 @@ const initialState: IWeatherState = {
 	errorMessage: "",
 };
 
-export const weatherReducer = createReducer(initialState, {});
+const weatherSlice = createSlice({
+	name: "weather",
+	initialState,
+	reducers: {
+		getForecastStart(state) {
+			state.isLoading = true;
+		},
+		getForecastSuccess(state, action: PayloadAction<IDailyForecast[]>) {
+			state.isLoading = false;
+			state.errorMessage = "";
+			state.forecast = action.payload;
+		},
+		getForecastError(state, action: PayloadAction<string>) {
+			state.isLoading = false;
+			state.errorMessage = action.payload;
+		},
+	},
+});
+
+export const { getForecastStart, getForecastError, getForecastSuccess } = weatherSlice.actions;
+
+export type WeatherActions =
+	| ReturnType<typeof getForecastStart>
+	| ReturnType<typeof getForecastError>
+	| ReturnType<typeof getForecastSuccess>;
+
+export const fetchWeatherForecast = (city: string | number): AppThunk<Promise<void>> => async (dispatch) => {
+	dispatch(getForecastStart());
+
+	try {
+		const forecast = await getWeatherForecast(city);
+
+		dispatch(getForecastSuccess(forecast));
+	} catch (error) {
+		dispatch(getForecastError(error.toString()));
+	}
+};
+
+export default weatherSlice.reducer;
