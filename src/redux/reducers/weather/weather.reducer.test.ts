@@ -11,13 +11,13 @@ jest.mock("@services/weather");
 
 describe("Weather", () => {
 	const testForecast: IDailyForecast[] = [
-		{ dayOfWeek: 0, minTemperature: 0, maxTemperature: 20 },
-		{ dayOfWeek: 1, minTemperature: 1, maxTemperature: 21 },
-		{ dayOfWeek: 2, minTemperature: 2, maxTemperature: 22 },
-		{ dayOfWeek: 3, minTemperature: 3, maxTemperature: 23 },
-		{ dayOfWeek: 4, minTemperature: 4, maxTemperature: 24 },
-		{ dayOfWeek: 5, minTemperature: 5, maxTemperature: 25 },
-		{ dayOfWeek: 6, minTemperature: 6, maxTemperature: 26 },
+		{ dayOfWeek: "Monday", minTemperature: 0, maxTemperature: 20 },
+		{ dayOfWeek: "Tuesday", minTemperature: 1, maxTemperature: 21 },
+		{ dayOfWeek: "Wednesday", minTemperature: 2, maxTemperature: 22 },
+		{ dayOfWeek: "Thursday", minTemperature: 3, maxTemperature: 23 },
+		{ dayOfWeek: "Friday", minTemperature: 4, maxTemperature: 24 },
+		{ dayOfWeek: "Saturday", minTemperature: 5, maxTemperature: 25 },
+		{ dayOfWeek: "Sunday", minTemperature: 6, maxTemperature: 26 },
 	];
 
 	describe("Weather actions", () => {

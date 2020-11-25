@@ -25,6 +25,6 @@ WithError.args = {
 };
 
 export default {
-	title: "CitySearch",
+	title: "City search component",
 	component: CitySearch,
 };

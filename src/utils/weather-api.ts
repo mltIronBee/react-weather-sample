@@ -3,7 +3,7 @@ import axios, { AxiosPromise } from "axios";
 const WEATHER_API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
 const instance = axios.create({
-	baseURL: "api.openweathermap.org/data/2.5",
+	baseURL: "https://api.openweathermap.org/data/2.5",
 });
 
 export interface IGetForecastResponse {

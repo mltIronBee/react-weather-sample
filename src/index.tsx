@@ -3,11 +3,14 @@ import { render } from "react-dom";
 import { Provider } from "react-redux";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core";
-import store from "@redux/store";
+import { ToastContainer } from "react-toastify";
+import createStore from "@redux/store";
 import App from "@src/App";
 import theme from "@src/theme";
 import reportWebVitals from "@src/reportWebVitals";
-import "@src/index.css";
+import "react-toastify/dist/ReactToastify.css";
+
+const store = createStore();
 
 render(
 	<React.StrictMode>
@@ -15,6 +18,7 @@ render(
 		<Provider store={store}>
 			<ThemeProvider theme={theme}>
 				<App />
+				<ToastContainer />
 			</ThemeProvider>
 		</Provider>
 	</React.StrictMode>,

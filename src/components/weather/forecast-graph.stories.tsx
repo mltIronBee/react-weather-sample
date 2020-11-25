@@ -4,13 +4,13 @@ import { ForecastGraph } from "@components/weather";
 import { IForecastGraphProps } from "@src/components/weather/forecast-graph";
 
 const sampleData: IForecastGraphProps["data"] = [
-	{ dayOfWeek: "Monday", min: 5, max: 13 },
-	{ dayOfWeek: "Tuesday", min: 3, max: 11 },
-	{ dayOfWeek: "Wednesday", min: 4, max: 9 },
-	{ dayOfWeek: "Thursday", min: 4, max: 9 },
-	{ dayOfWeek: "Friday", min: 4, max: 9 },
-	{ dayOfWeek: "Saturday", min: 2, max: 8 },
-	{ dayOfWeek: "Sunday", min: 1, max: 8 },
+	{ dayOfWeek: "Monday", minTemperature: 5, maxTemperature: 13 },
+	{ dayOfWeek: "Tuesday", minTemperature: 3, maxTemperature: 11 },
+	{ dayOfWeek: "Wednesday", minTemperature: 4, maxTemperature: 9 },
+	{ dayOfWeek: "Thursday", minTemperature: 4, maxTemperature: 9 },
+	{ dayOfWeek: "Friday", minTemperature: 4, maxTemperature: 9 },
+	{ dayOfWeek: "Saturday", minTemperature: 2, maxTemperature: 8 },
+	{ dayOfWeek: "Sunday", minTemperature: 1, maxTemperature: 8 },
 ];
 
 const Template: Story<ComponentProps<typeof ForecastGraph>> = ({ data, ...args }) => (
@@ -19,10 +19,10 @@ const Template: Story<ComponentProps<typeof ForecastGraph>> = ({ data, ...args }
 
 export const Default = Template.bind({});
 
-export const Loading = Template.bind({});
+export const WithoutData = Template.bind({});
 
-Loading.args = {
-	loading: true,
+WithoutData.args = {
+	data: [],
 };
 
 export const WithError = Template.bind({});
@@ -31,8 +31,28 @@ WithError.args = {
 	hasError: true,
 };
 
+export const LoadingWithoutData = Template.bind({});
+
+LoadingWithoutData.args = {
+	data: [],
+	loading: true,
+};
+
+export const LoadingWithData = Template.bind({});
+
+LoadingWithData.args = {
+	loading: true,
+};
+
+export const LoadingWithError = Template.bind({});
+
+LoadingWithError.args = {
+	loading: true,
+	hasError: true,
+};
+
 export default {
-	title: "ForecastGraph",
+	title: "Forecast chart component",
 	component: ForecastGraph,
 	decorators: [
 		(Story: React.ComponentType): JSX.Element => (

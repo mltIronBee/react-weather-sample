@@ -1,21 +1,16 @@
 import React from "react";
 import { render, RenderOptions, RenderResult } from "@testing-library/react";
-import { Provider } from "react-redux";
 import { ThemeProvider } from "@material-ui/core";
-import StylesProvider from "@material-ui/styles/StylesProvider";
-import { StylesOptions } from "@material-ui/styles";
+import { GenerateId } from "jss";
+import { StylesProvider } from "@material-ui/core/styles";
 import theme from "@src/theme";
-import store from "@redux/store";
 
-const generateClassName: StylesOptions["generateClassName"] = (rule, sheet) =>
-	`${sheet!.options.classNamePrefix}-${rule.key}`;
+const generateClassName: GenerateId = (rule, sheet) => `${sheet!.options.classNamePrefix}-${rule.key}`;
 
 const AllTheProviders: React.FC = ({ children }) => (
-	<Provider store={store}>
-		<StylesProvider generateClassName={generateClassName}>
-			<ThemeProvider theme={theme}>{children}</ThemeProvider>
-		</StylesProvider>
-	</Provider>
+	<StylesProvider generateClassName={generateClassName}>
+		<ThemeProvider theme={theme}>{children}</ThemeProvider>
+	</StylesProvider>
 );
 
 const customRender = (ui: React.ReactElement, options?: Omit<RenderOptions, "queries">): RenderResult =>

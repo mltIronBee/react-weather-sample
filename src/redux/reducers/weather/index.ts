@@ -5,7 +5,7 @@ import { getWeatherForecast } from "@services/weather";
 export interface IDailyForecast {
 	readonly minTemperature: number;
 	readonly maxTemperature: number;
-	readonly dayOfWeek: number;
+	readonly dayOfWeek: string;
 }
 
 export interface IWeatherState {

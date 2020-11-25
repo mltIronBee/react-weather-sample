@@ -59,13 +59,13 @@ describe("Weather service", () => {
 
 	it("Should correctly map API response", async () => {
 		const expected: IDailyForecast[] = [
-			{ dayOfWeek: 1, minTemperature: 0, maxTemperature: 25 },
-			{ dayOfWeek: 2, minTemperature: 1, maxTemperature: 26 },
-			{ dayOfWeek: 3, minTemperature: 2, maxTemperature: 27 },
-			{ dayOfWeek: 4, minTemperature: 3, maxTemperature: 28 },
-			{ dayOfWeek: 5, minTemperature: 4, maxTemperature: 29 },
-			{ dayOfWeek: 6, minTemperature: 5, maxTemperature: 30 },
-			{ dayOfWeek: 7, minTemperature: 6, maxTemperature: 31 },
+			{ dayOfWeek: "Monday", minTemperature: 0, maxTemperature: 25 },
+			{ dayOfWeek: "Tuesday", minTemperature: 1, maxTemperature: 26 },
+			{ dayOfWeek: "Wednesday", minTemperature: 2, maxTemperature: 27 },
+			{ dayOfWeek: "Thursday", minTemperature: 3, maxTemperature: 28 },
+			{ dayOfWeek: "Friday", minTemperature: 4, maxTemperature: 29 },
+			{ dayOfWeek: "Saturday", minTemperature: 5, maxTemperature: 30 },
+			{ dayOfWeek: "Sunday", minTemperature: 6, maxTemperature: 31 },
 		];
 
 		const actual = await weatherService.getWeatherForecast(0);

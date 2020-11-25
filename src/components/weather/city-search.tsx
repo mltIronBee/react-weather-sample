@@ -19,7 +19,9 @@ export const CitySearch: React.FC<ICitySearchProps> = (props) => {
 
 	return (
 		<TextField
+			fullWidth
 			label="Search city"
+			placeholder="Enter city to search"
 			error={!!props.errorMessage}
 			helperText={props.errorMessage}
 			value={props.value}
@@ -31,7 +33,7 @@ export const CitySearch: React.FC<ICitySearchProps> = (props) => {
 						{props.searching ? (
 							<CircularProgress className={classes.loadingIcon} size={24} />
 						) : (
-							<IconButton onClick={props.onSearch}>
+							<IconButton aria-label="Search" onClick={props.onSearch}>
 								<SearchIcon />
 							</IconButton>
 						)}
