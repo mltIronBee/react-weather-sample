@@ -46,7 +46,7 @@ export type WeatherActions =
 	| ReturnType<typeof getForecastError>
 	| ReturnType<typeof getForecastSuccess>;
 
-export const fetchWeatherForecast = (city: string | number): AppThunk<Promise<void>> => async (dispatch) => {
+export const fetchWeatherForecast = (city: string): AppThunk<Promise<void>> => async (dispatch) => {
 	dispatch(getForecastStart());
 
 	try {

@@ -50,7 +50,7 @@ describe("Weather", () => {
 			const dispatchMock = jest.fn();
 			const expectedFirstArgs = { type: "weather/getForecastStart" };
 			const expectedSecondArgs = { type: "weather/getForecastSuccess", payload: testForecast };
-			const action = fetchWeatherForecast(0);
+			const action = fetchWeatherForecast("Odesa");
 
 			await action(dispatchMock, () => ({ weather: { isLoading: false, forecast: [] } }), {});
 

@@ -1,21 +1,27 @@
 import * as weatherService from "@services/weather";
 import { IDailyForecast } from "@src/redux/reducers/weather";
 import * as weatherApi from "@utils/weather-api";
+import * as geolocationApi from "@utils/geolocation-api";
 
 jest.mock("@utils/weather-api");
+jest.mock("@utils/geolocation-api");
 
 describe("Weather service", () => {
-	const generateTestData = (): weatherApi.IGetForecastResponse["list"] => {
-		const data: weatherApi.IGetForecastResponse["list"] = [];
+	const generateTestData = (): weatherApi.IGetForecastResponse["daily"] => {
+		const data: weatherApi.IGetForecastResponse["daily"] = [];
 
 		for (let i = 0; i < 7; i++) {
 			// 09 Nov 2020 is a Monday, this way we generate forecast for each day of week
 			const day = i + 9;
 			const dayString = day.toString(10).padStart(2, "0");
 
+			/* eslint-disable camelcase */
 			data.push({
 				clouds: 0,
-				deg: 0,
+				wind_deg: 0,
+				dew_point: 0,
+				uvi: 0,
+				visibility: 0,
 				dt: Math.floor(new Date(`2020-11-${dayString}T00:00:00Z`).getTime() / 1000),
 				// eslint-disable-next-line camelcase
 				feels_like: {
@@ -27,7 +33,7 @@ describe("Weather service", () => {
 				humidity: 0,
 				pop: 0,
 				pressure: 0,
-				speed: 0,
+				wind_speed: 0,
 				sunrise: Math.floor(new Date(`2020-11-${dayString}T06:00:00Z`).getTime() / 1000),
 				sunset: Math.floor(new Date(`2020-11-${dayString}T18:00:00Z`).getTime() / 1000),
 				temp: {
@@ -47,6 +53,7 @@ describe("Weather service", () => {
 					},
 				],
 			});
+			/* eslint-enable camelcase */
 		}
 
 		return data;
@@ -55,6 +62,11 @@ describe("Weather service", () => {
 
 	beforeAll(() => {
 		(weatherApi as any)._setMockData(testResponse);
+	});
+
+	afterAll(() => {
+		(geolocationApi as any)._resetHistory();
+		(weatherApi as any)._clearMockData();
 	});
 
 	it("Should correctly map API response", async () => {
@@ -68,7 +80,7 @@ describe("Weather service", () => {
 			{ dayOfWeek: "Sunday", minTemperature: 6, maxTemperature: 31 },
 		];
 
-		const actual = await weatherService.getWeatherForecast(0);
+		const actual = await weatherService.getWeatherForecast("Odesa");
 
 		expect(actual).toEqual(expected);
 	});

@@ -6,5 +6,8 @@ export default makeStyles((theme: Theme) =>
 		loadingIcon: {
 			padding: theme.spacing(1.5),
 		},
+		iconButton: {
+			color: theme.palette.primary.main,
+		},
 	}),
 );

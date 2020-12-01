@@ -6,10 +6,12 @@ import { toast } from "react-toastify";
 import { CitySearch, ForecastGraph } from "@components/weather";
 import { IAppState } from "@redux/reducers";
 import { fetchWeatherForecast, IWeatherState } from "@redux/reducers/weather";
+import { getCurrentLocation } from "@services/geolocation";
 import useStyles from "@containers/weather/weather-forecast.styles";
 
 export const WeatherForecast: React.FC = () => {
 	const classes = useStyles();
+	const [isGeolocationAvailable, setGeolocationAvailability] = useState(!!navigator.geolocation);
 	const [searchValue, setSearchValue] = useState("");
 	const { isLoading, forecast, errorMessage } = useSelector<IAppState, IWeatherState>((state) => state.weather);
 	const dispatch = useDispatch();
@@ -24,9 +26,28 @@ export const WeatherForecast: React.FC = () => {
 		setSearchValue(event.currentTarget.value);
 	}, []);
 
-	const handleSearch = useCallback(() => {
-		dispatch(fetchWeatherForecast(searchValue));
-	}, [dispatch, searchValue]);
+	const handleSearch = useCallback(
+		(event: React.FormEvent<HTMLFormElement>) => {
+			event.preventDefault();
+
+			dispatch(fetchWeatherForecast(searchValue));
+		},
+		[dispatch, searchValue],
+	);
+
+	const handleGeopositionRetrieval = useCallback(async () => {
+		try {
+			const result = await getCurrentLocation();
+
+			setSearchValue(result.location);
+		} catch (e) {
+			toast.error(e.message);
+			// If error is not axios related, then geolocation is not available/not allowed
+			if (!e.isAxiosError) {
+				setGeolocationAvailability(false);
+			}
+		}
+	}, []);
 
 	return (
 		<Fragment>
@@ -36,9 +57,11 @@ export const WeatherForecast: React.FC = () => {
 						<CitySearch
 							value={searchValue}
 							searching={isLoading}
+							geolocationAvailable={isGeolocationAvailable}
 							errorMessage={errorMessage}
 							onChange={handleChange}
 							onSearch={handleSearch}
+							onGetLocation={handleGeopositionRetrieval}
 						/>
 					</Grid>
 				</Grid>

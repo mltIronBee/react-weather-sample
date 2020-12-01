@@ -1,9 +1,10 @@
-import { IGetForecastResponse } from "@src/utils/weather-api";
+import { DEFAULT_COORDS } from "@utils/test-utils";
+import { IGetForecastResponse } from "@utils/weather-api";
 import { AxiosPromise } from "axios";
 
-let testData: IGetForecastResponse["list"] = [];
+let testData: IGetForecastResponse["daily"] = [];
 
-export const _setMockData = (data: IGetForecastResponse["list"]): void => {
+export const _setMockData = (data: IGetForecastResponse["daily"]): void => {
 	testData = data;
 };
 
@@ -11,32 +12,33 @@ export const _clearMockData = (): void => {
 	testData = [];
 };
 
-export const getForecast = async (city: string | number): Promise<AxiosPromise<IGetForecastResponse>> => {
-	if (city === "invalid") {
+export const getForecast = async (lat: number, lon: number): Promise<AxiosPromise<IGetForecastResponse>> => {
+	if (lat !== DEFAULT_COORDS.lat && lon !== DEFAULT_COORDS.lng) {
 		throw new Error("Cannot fetch forecast");
 	}
 
+	const currentWeather = testData[0];
+
+	/* eslint-disable camelcase */
 	return {
 		headers: {},
 		config: {},
 		status: 200,
 		statusText: "OK",
 		data: {
-			city: {
-				coord: {
-					lat: 0,
-					lon: 0,
-				},
-				country: "test",
-				id: 0,
-				name: "test",
-				population: 0,
-				timezone: 0,
+			lat: DEFAULT_COORDS.lat,
+			lon: DEFAULT_COORDS.lng,
+			current: {
+				...currentWeather,
+				temp: currentWeather.temp.day,
+				feels_like: currentWeather.feels_like.day,
+				rain: currentWeather.rain ? { "1h": currentWeather.rain / 24 } : void 0,
+				snow: currentWeather.snow ? { "1h": currentWeather.snow / 24 } : void 0,
 			},
-			cnt: 1,
-			cod: "200",
-			list: testData,
-			message: 0,
+			daily: testData,
+			timezone: "Europe/Kyiv",
+			timezone_offset: 7200,
 		},
 	};
+	/* eslint-disable camelcase */
 };

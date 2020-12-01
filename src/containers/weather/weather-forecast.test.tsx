@@ -62,7 +62,7 @@ describe("Weather forecast container", () => {
 				toastErrorSpy.mockClear();
 			});
 
-			it("User should be able to enter city for search and get forecast information", async () => {
+			it("Should allow user to enter city for search and get forecast by clicking search icon", async () => {
 				const store = configureStore<IAppState, AppActions>(middleware)({
 					weather: {
 						isLoading: false,
@@ -78,10 +78,44 @@ describe("Weather forecast container", () => {
 					</Provider>,
 				);
 
-				fireEvent.change(screen.getByPlaceholderText(/^Enter city to search$/i), { target: { value: testCity } });
+				fireEvent.change(screen.getByLabelText(/^search city$/i), { target: { value: testCity } });
 				fireEvent.click(screen.getByLabelText(/^search$/i));
 
 				await waitFor(() => screen.findByLabelText(/^Search$/i));
+
+				const expectedActions = [
+					{ type: "weather/getForecastStart" },
+					{ type: "weather/getForecastSuccess", payload: testData },
+				];
+				const actualActions = store.getActions();
+
+				expect(weatherServiceSpy).toBeCalledWith(testCity);
+				expect(actualActions).toEqual(expectedActions);
+			});
+
+			it("Should allow user to enter city for search and get forecast by pressing enter", async () => {
+				const store = configureStore<IAppState, AppActions>(middleware)({
+					weather: {
+						isLoading: false,
+						forecast: [],
+						errorMessage: "",
+					},
+				});
+				const testCity = "Odesa";
+
+				render(
+					<Provider store={store}>
+						<WeatherForecast />
+					</Provider>,
+				);
+
+				const searchInput = screen.getByLabelText(/^search city$/i);
+
+				fireEvent.click(searchInput);
+				fireEvent.change(searchInput, { target: { value: testCity } });
+				fireEvent.submit(searchInput);
+
+				await new Promise((resolve) => setTimeout(resolve, 0));
 
 				const expectedActions = [
 					{ type: "weather/getForecastStart" },

@@ -1,3 +1,8 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createMuiTheme, Theme } from "@material-ui/core/styles";
 
-export default createMuiTheme();
+export const generateTheme = (prefersDarkMode = false): Theme =>
+	createMuiTheme({
+		palette: {
+			type: prefersDarkMode ? "dark" : "light",
+		},
+	});
