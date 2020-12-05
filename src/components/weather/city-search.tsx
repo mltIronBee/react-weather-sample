@@ -53,15 +53,17 @@ export const CitySearch: React.FC<ICitySearchProps> = (props) => {
 								<CircularProgress className={classes.loadingIcon} size={24} />
 							) : (
 								<Tooltip title="Search">
-									<IconButton
-										disabled={!props.value}
-										className={classes.iconButton}
-										component="button"
-										type="submit"
-										aria-label="Search"
-									>
-										<SearchIcon />
-									</IconButton>
+									<span>
+										<IconButton
+											disabled={!props.value}
+											className={classes.iconButton}
+											component="button"
+											type="submit"
+											aria-label="Search"
+										>
+											<SearchIcon />
+										</IconButton>
+									</span>
 								</Tooltip>
 							)}
 						</InputAdornment>

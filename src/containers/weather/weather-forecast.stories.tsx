@@ -1,11 +1,11 @@
 import React, { ComponentProps } from "react";
 import { Provider } from "react-redux";
 import { Story } from "@storybook/react/types-6-0";
-import { ToastContainer } from "react-toastify";
 import { WeatherForecast } from "@containers/weather";
+import { SnackbarProvider } from "@containers/snackbar";
 import createStore from "@redux/store";
 import { EnhancedStore } from "@reduxjs/toolkit";
-import { AppActions, IAppState } from "@src/redux/reducers";
+import { AppActions, IAppState } from "@redux/reducers";
 
 const Template: Story<ComponentProps<typeof WeatherForecast> & { store: EnhancedStore<IAppState, AppActions> }> = (
 	props,
@@ -65,9 +65,9 @@ export default {
 	component: WeatherForecast,
 	decorators: [
 		(Story: React.ComponentType): JSX.Element => (
-			<ToastContainer>
+			<SnackbarProvider>
 				<Story />
-			</ToastContainer>
+			</SnackbarProvider>
 		),
 	],
 };

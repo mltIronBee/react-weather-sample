@@ -1,193 +1,307 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`City search input Rendering Should correctly render error message and outline on error 1`] = `
-<div
-  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
->
-  <label
-    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-error MuiInputLabel-error MuiFormLabel-filled"
-    data-shrink="true"
-  >
-    Search city
-  </label>
+<form>
   <div
-    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-error MuiOutlinedInput-error MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+    class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
   >
-    <input
-      aria-invalid="true"
-      class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
-      placeholder="Enter city to search"
-      type="text"
-      value="Lorem Ipsum"
-    />
+    <label
+      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-error MuiInputLabel-error MuiFormLabel-filled"
+      data-shrink="true"
+      for="city-search"
+      id="city-search-label"
+    >
+      Search city
+    </label>
     <div
-      class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-error MuiOutlinedInput-error MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
     >
-      <button
-        aria-label="Search"
-        class="MuiButtonBase-root MuiIconButton-root"
-        tabindex="0"
-        type="button"
+      <input
+        aria-describedby="city-search-helper-text"
+        aria-invalid="true"
+        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+        id="city-search"
+        placeholder="Enter city to search"
+        type="text"
+        value="Lorem Ipsum"
+      />
+      <div
+        class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
       >
         <span
-          class="MuiIconButton-label"
+          class=""
+          title="Use current location"
         >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root"
-            focusable="false"
-            viewBox="0 0 24 24"
+          <button
+            aria-label="get current location"
+            class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton"
+            tabindex="0"
+            type="button"
           >
-            <path
-              d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+            <span
+              class="MuiIconButton-label"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
             />
-          </svg>
+          </button>
         </span>
         <span
-          class="MuiTouchRipple-root"
-        />
-      </button>
-    </div>
-    <fieldset
-      aria-hidden="true"
-      class="PrivateNotchedOutline-root MuiOutlinedInput-notchedOutline"
-    >
-      <legend
-        class="PrivateNotchedOutline-legendLabelled PrivateNotchedOutline-legendNotched"
-      >
-        <span>
-          Search city
+          class=""
+          title="Search"
+        >
+          <button
+            aria-label="Search"
+            class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton"
+            tabindex="0"
+            type="submit"
+          >
+            <span
+              class="MuiIconButton-label"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
         </span>
-      </legend>
-    </fieldset>
+      </div>
+      <fieldset
+        aria-hidden="true"
+        class="PrivateNotchedOutline-root MuiOutlinedInput-notchedOutline"
+      >
+        <legend
+          class="PrivateNotchedOutline-legendLabelled PrivateNotchedOutline-legendNotched"
+        >
+          <span>
+            Search city
+          </span>
+        </legend>
+      </fieldset>
+    </div>
+    <p
+      class="MuiFormHelperText-root MuiFormHelperText-contained MuiFormHelperText-error MuiFormHelperText-filled"
+      id="city-search-helper-text"
+    >
+      Invalid city name
+    </p>
   </div>
-  <p
-    class="MuiFormHelperText-root MuiFormHelperText-contained MuiFormHelperText-error MuiFormHelperText-filled"
-  >
-    Invalid city name
-  </p>
-</div>
+</form>
 `;
 
 exports[`City search input Rendering Should correctly render input during loading 1`] = `
-<div
-  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
->
-  <label
-    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
-    data-shrink="false"
-  >
-    Search city
-  </label>
+<form>
   <div
-    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+    class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
   >
-    <input
-      aria-invalid="false"
-      class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
-      placeholder="Enter city to search"
-      type="text"
-      value=""
-    />
+    <label
+      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+      data-shrink="false"
+      for="city-search"
+      id="city-search-label"
+    >
+      Search city
+    </label>
     <div
-      class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
     >
+      <input
+        aria-invalid="false"
+        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+        id="city-search"
+        placeholder="Enter city to search"
+        type="text"
+        value=""
+      />
       <div
-        class="MuiCircularProgress-root makeStyles-loadingIcon MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
-        role="progressbar"
-        style="width: 24px; height: 24px;"
+        class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
       >
-        <svg
-          class="MuiCircularProgress-svg"
-          viewBox="22 22 44 44"
+        <span
+          class=""
+          title="Use current location"
         >
-          <circle
-            class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
-            cx="44"
-            cy="44"
-            fill="none"
-            r="20.2"
-            stroke-width="3.6"
-          />
-        </svg>
-      </div>
-    </div>
-    <fieldset
-      aria-hidden="true"
-      class="PrivateNotchedOutline-root MuiOutlinedInput-notchedOutline"
-    >
-      <legend
-        class="PrivateNotchedOutline-legendLabelled"
-      >
-        <span>
-          Search city
+          <button
+            aria-label="get current location"
+            class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton"
+            tabindex="0"
+            type="button"
+          >
+            <span
+              class="MuiIconButton-label"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
         </span>
-      </legend>
-    </fieldset>
+        <div
+          class="MuiCircularProgress-root makeStyles-loadingIcon MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+          role="progressbar"
+          style="width: 24px; height: 24px;"
+        >
+          <svg
+            class="MuiCircularProgress-svg"
+            viewBox="22 22 44 44"
+          >
+            <circle
+              class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+              cx="44"
+              cy="44"
+              fill="none"
+              r="20.2"
+              stroke-width="3.6"
+            />
+          </svg>
+        </div>
+      </div>
+      <fieldset
+        aria-hidden="true"
+        class="PrivateNotchedOutline-root MuiOutlinedInput-notchedOutline"
+      >
+        <legend
+          class="PrivateNotchedOutline-legendLabelled"
+        >
+          <span>
+            Search city
+          </span>
+        </legend>
+      </fieldset>
+    </div>
   </div>
-</div>
+</form>
 `;
 
 exports[`City search input Rendering Should render correctly 1`] = `
-<div
-  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
->
-  <label
-    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-filled"
-    data-shrink="true"
-  >
-    Search city
-  </label>
+<form>
   <div
-    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+    class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
   >
-    <input
-      aria-invalid="false"
-      class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
-      placeholder="Enter city to search"
-      type="text"
-      value="Odesa"
-    />
+    <label
+      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-filled"
+      data-shrink="true"
+      for="city-search"
+      id="city-search-label"
+    >
+      Search city
+    </label>
     <div
-      class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
+      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
     >
-      <button
-        aria-label="Search"
-        class="MuiButtonBase-root MuiIconButton-root"
-        tabindex="0"
-        type="button"
+      <input
+        aria-invalid="false"
+        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+        id="city-search"
+        placeholder="Enter city to search"
+        type="text"
+        value="Odesa"
+      />
+      <div
+        class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
       >
         <span
-          class="MuiIconButton-label"
+          class=""
+          title="Use current location"
         >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root"
-            focusable="false"
-            viewBox="0 0 24 24"
+          <button
+            aria-label="get current location"
+            class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton"
+            tabindex="0"
+            type="button"
           >
-            <path
-              d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+            <span
+              class="MuiIconButton-label"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
             />
-          </svg>
+          </button>
         </span>
         <span
-          class="MuiTouchRipple-root"
-        />
-      </button>
-    </div>
-    <fieldset
-      aria-hidden="true"
-      class="PrivateNotchedOutline-root MuiOutlinedInput-notchedOutline"
-    >
-      <legend
-        class="PrivateNotchedOutline-legendLabelled PrivateNotchedOutline-legendNotched"
-      >
-        <span>
-          Search city
+          class=""
+          title="Search"
+        >
+          <button
+            aria-label="Search"
+            class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton"
+            tabindex="0"
+            type="submit"
+          >
+            <span
+              class="MuiIconButton-label"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
         </span>
-      </legend>
-    </fieldset>
+      </div>
+      <fieldset
+        aria-hidden="true"
+        class="PrivateNotchedOutline-root MuiOutlinedInput-notchedOutline"
+      >
+        <legend
+          class="PrivateNotchedOutline-legendLabelled PrivateNotchedOutline-legendNotched"
+        >
+          <span>
+            Search city
+          </span>
+        </legend>
+      </fieldset>
+    </div>
   </div>
-</div>
+</form>
 `;

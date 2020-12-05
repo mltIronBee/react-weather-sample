@@ -1,19 +1,19 @@
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { ToastContainer } from "react-toastify";
 import createStore from "@redux/store";
+import { SnackbarProvider } from "@containers/snackbar";
 import App from "@src/App";
 import reportWebVitals from "@src/reportWebVitals";
-import "react-toastify/dist/ReactToastify.css";
 
 const store = createStore();
 
 render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<App />
-			<ToastContainer />
+			<SnackbarProvider>
+				<App />
+			</SnackbarProvider>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById("root"),

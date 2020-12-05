@@ -1,10 +1,12 @@
 import React from "react";
 import { ThemeProvider } from "@material-ui/core";
-import theme from "@src/theme";
+import { generateTheme } from "@src/theme";
 
 export const parameters = {
 	actions: { argTypesRegex: "^on[A-Z].*" },
 };
+
+const theme = generateTheme();
 
 export const decorators = [
 	(Story) => (

@@ -1,8 +1,8 @@
-import React, { Fragment, useState, useCallback, useEffect } from "react";
+import React, { Fragment, useState, useCallback, useEffect, useContext } from "react";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { ISnackbarContext, SnackbarContext } from "@containers/snackbar";
 import { CitySearch, ForecastGraph } from "@components/weather";
 import { IAppState } from "@redux/reducers";
 import { fetchWeatherForecast, IWeatherState } from "@redux/reducers/weather";
@@ -14,13 +14,14 @@ export const WeatherForecast: React.FC = () => {
 	const [isGeolocationAvailable, setGeolocationAvailability] = useState(!!navigator.geolocation);
 	const [searchValue, setSearchValue] = useState("");
 	const { isLoading, forecast, errorMessage } = useSelector<IAppState, IWeatherState>((state) => state.weather);
+	const { snackbar } = useContext<ISnackbarContext>(SnackbarContext);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (errorMessage) {
-			toast.error(errorMessage);
+			snackbar.error(errorMessage);
 		}
-	}, [errorMessage]);
+	}, [snackbar, errorMessage]);
 
 	const handleChange = useCallback((event: React.FormEvent<HTMLInputElement>) => {
 		setSearchValue(event.currentTarget.value);
@@ -41,13 +42,13 @@ export const WeatherForecast: React.FC = () => {
 
 			setSearchValue(result.location);
 		} catch (e) {
-			toast.error(e.message);
+			snackbar.error(e.message);
 			// If error is not axios related, then geolocation is not available/not allowed
 			if (!e.isAxiosError) {
 				setGeolocationAvailability(false);
 			}
 		}
-	}, []);
+	}, [snackbar]);
 
 	return (
 		<Fragment>

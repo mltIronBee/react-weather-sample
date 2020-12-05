@@ -1,16 +1,17 @@
 import React from "react";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import { toast } from "react-toastify";
 import { getDefaultMiddleware } from "@reduxjs/toolkit";
 import { render, screen, fireEvent, waitFor } from "@utils/test-utils";
 import { WeatherForecast } from "@containers/weather/weather-forecast";
+import * as SnackbarApi from "@containers/snackbar";
 import { AppActions, IAppState } from "@redux/reducers";
 import { IForecastGraphProps } from "@components/weather/forecast-graph";
 import * as weatherService from "@services/weather";
 
 jest.mock("recharts");
 jest.mock("@services/weather");
+jest.mock("@containers/snackbar/snackbar-context");
 
 describe("Weather forecast container", () => {
 	const testData: IForecastGraphProps["data"] = [
@@ -46,7 +47,6 @@ describe("Weather forecast container", () => {
 
 		describe("Weather search flow", () => {
 			const weatherServiceSpy = (weatherService as any)._getWeatherForecastSpy as jest.Mock;
-			const toastErrorSpy = jest.spyOn(toast, "error");
 
 			beforeAll(() => {
 				(weatherService as any)._setMockData(testData);
@@ -54,12 +54,11 @@ describe("Weather forecast container", () => {
 
 			afterAll(() => {
 				(weatherService as any)._clearMockData();
-				toastErrorSpy.mockRestore();
 			});
 
 			afterEach(() => {
 				weatherServiceSpy.mockClear();
-				toastErrorSpy.mockClear();
+				(SnackbarApi as any)._resetHistory();
 			});
 
 			it("Should allow user to enter city for search and get forecast by clicking search icon", async () => {
@@ -175,9 +174,14 @@ describe("Weather forecast container", () => {
 						errorMessage: testError,
 					},
 				});
+
+				const { SnackbarProvider, _showMock, _errorMock } = SnackbarApi as any;
+
 				const { rerender } = render(
 					<Provider store={initialStore}>
-						<WeatherForecast />
+						<SnackbarProvider>
+							<WeatherForecast />
+						</SnackbarProvider>
 					</Provider>,
 				);
 
@@ -185,12 +189,17 @@ describe("Weather forecast container", () => {
 
 				rerender(
 					<Provider store={errorStore}>
-						<WeatherForecast />
+						<SnackbarProvider>
+							<WeatherForecast />
+						</SnackbarProvider>
 					</Provider>,
 				);
 
-				expect(toastErrorSpy).toBeCalledWith(testError);
-				expect(screen.getByText(testError)).toBeInTheDocument();
+				try {
+					expect(_showMock).toBeCalledWith(testError, "error");
+				} catch (e) {
+					expect(_errorMock).toBeCalledWith(testError);
+				}
 			});
 		});
 	});
