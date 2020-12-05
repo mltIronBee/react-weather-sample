@@ -1,1 +1,8 @@
 config/*
+build/*
+node_modules/*
+.vscode/*
+build/*
+scripts/*
+public/*
+package-lock.json
