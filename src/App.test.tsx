@@ -11,6 +11,7 @@ describe("App container", () => {
 	const store = configureStore<IAppState>(getDefaultMiddleware())({
 		weather: {
 			isLoading: false,
+			current: null,
 			forecast: [],
 			errorMessage: "",
 		},

@@ -8,12 +8,33 @@ import * as SnackbarApi from "@containers/snackbar";
 import { AppActions, IAppState } from "@redux/reducers";
 import { IForecastGraphProps } from "@components/weather/forecast-graph";
 import * as weatherService from "@services/weather";
+import { ICurrentWeather } from "@redux/reducers/weather";
 
 jest.mock("recharts");
 jest.mock("@services/weather");
 jest.mock("@containers/snackbar/snackbar-context");
 
 describe("Weather forecast container", () => {
+	const testCurrent: ICurrentWeather = {
+		clouds: 0,
+		date: Date.now(),
+		feelsLike: 16,
+		humidity: 80,
+		pressure: 1000,
+		sunrise: Date.now(),
+		sunset: Date.now(),
+		temperature: 20,
+		uvIndex: 0.7,
+		visibility: 10000,
+		weather: {
+			description: "clear sky",
+			icon: "01d",
+			id: 800,
+			main: "Clear",
+		},
+		windDeg: 100,
+		windSpeed: 5,
+	};
 	const testData: IForecastGraphProps["data"] = [
 		{ dayOfWeek: "Monday", minTemperature: 5, maxTemperature: 13 },
 		{ dayOfWeek: "Tuesday", minTemperature: 3, maxTemperature: 11 },
@@ -31,6 +52,7 @@ describe("Weather forecast container", () => {
 			const store = configureStore<IAppState>()({
 				weather: {
 					isLoading: false,
+					current: testCurrent,
 					forecast: testData,
 					errorMessage: "",
 				},
@@ -49,7 +71,7 @@ describe("Weather forecast container", () => {
 			const weatherServiceSpy = (weatherService as any)._getWeatherForecastSpy as jest.Mock;
 
 			beforeAll(() => {
-				(weatherService as any)._setMockData(testData);
+				(weatherService as any)._setMockData({ current: testCurrent, forecast: testData });
 			});
 
 			afterAll(() => {
@@ -65,6 +87,7 @@ describe("Weather forecast container", () => {
 				const store = configureStore<IAppState, AppActions>(middleware)({
 					weather: {
 						isLoading: false,
+						current: testCurrent,
 						forecast: [],
 						errorMessage: "",
 					},
@@ -84,7 +107,7 @@ describe("Weather forecast container", () => {
 
 				const expectedActions = [
 					{ type: "weather/getForecastStart" },
-					{ type: "weather/getForecastSuccess", payload: testData },
+					{ type: "weather/getForecastSuccess", payload: { current: testCurrent, forecast: testData } },
 				];
 				const actualActions = store.getActions();
 
@@ -96,6 +119,7 @@ describe("Weather forecast container", () => {
 				const store = configureStore<IAppState, AppActions>(middleware)({
 					weather: {
 						isLoading: false,
+						current: null,
 						forecast: [],
 						errorMessage: "",
 					},
@@ -118,7 +142,7 @@ describe("Weather forecast container", () => {
 
 				const expectedActions = [
 					{ type: "weather/getForecastStart" },
-					{ type: "weather/getForecastSuccess", payload: testData },
+					{ type: "weather/getForecastSuccess", payload: { current: testCurrent, forecast: testData } },
 				];
 				const actualActions = store.getActions();
 
@@ -130,6 +154,7 @@ describe("Weather forecast container", () => {
 				const store = configureStore<IAppState>(middleware)({
 					weather: {
 						isLoading: false,
+						current: null,
 						forecast: [],
 						errorMessage: "",
 					},
@@ -163,6 +188,7 @@ describe("Weather forecast container", () => {
 				const initialStore = createStore({
 					weather: {
 						isLoading: false,
+						current: null,
 						forecast: [],
 						errorMessage: "",
 					},
@@ -170,6 +196,7 @@ describe("Weather forecast container", () => {
 				const errorStore = createStore({
 					weather: {
 						isLoading: false,
+						current: null,
 						forecast: [],
 						errorMessage: testError,
 					},

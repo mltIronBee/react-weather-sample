@@ -16,14 +16,34 @@ const Template: Story<ComponentProps<typeof WeatherForecast> & { store: Enhanced
 );
 
 const defaultStore = createStore();
-const loadingStore = createStore({ weather: { isLoading: true, forecast: [], errorMessage: "" } });
+const loadingStore = createStore({ weather: { isLoading: true, current: null, forecast: [], errorMessage: "" } });
 const errorStore = createStore({
-	weather: { isLoading: false, forecast: [], errorMessage: "Error: Failed to fetch forecast" },
+	weather: { isLoading: false, current: null, forecast: [], errorMessage: "Error: Failed to fetch forecast" },
 });
 const loadedStore = createStore({
 	weather: {
 		isLoading: false,
 		errorMessage: "",
+		current: {
+			clouds: 0,
+			date: Date.now(),
+			feelsLike: 16,
+			humidity: 80,
+			pressure: 1000,
+			sunrise: Date.now(),
+			sunset: Date.now(),
+			temperature: 20,
+			uvIndex: 0.7,
+			visibility: 10000,
+			weather: {
+				description: "clear sky",
+				icon: "01d",
+				id: 800,
+				main: "Clear",
+			},
+			windDeg: 100,
+			windSpeed: 5,
+		},
 		forecast: [
 			{ dayOfWeek: "Monday", minTemperature: -5, maxTemperature: -1 },
 			{ dayOfWeek: "Tuesday", minTemperature: -3, maxTemperature: 11 },

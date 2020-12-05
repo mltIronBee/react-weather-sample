@@ -5,11 +5,32 @@ import weatherReducer, {
 	fetchWeatherForecast,
 	IDailyForecast,
 	IWeatherState,
+	ICurrentWeather,
 } from "@redux/reducers/weather";
 import * as weatherApi from "@services/weather";
 jest.mock("@services/weather");
 
 describe("Weather", () => {
+	const testCurrent: ICurrentWeather = {
+		clouds: 0,
+		date: Date.now(),
+		feelsLike: 16,
+		humidity: 80,
+		pressure: 1000,
+		sunrise: Date.now(),
+		sunset: Date.now(),
+		temperature: 20,
+		uvIndex: 0.7,
+		visibility: 10000,
+		weather: {
+			description: "clear sky",
+			icon: "01d",
+			id: 800,
+			main: "Clear",
+		},
+		windDeg: 100,
+		windSpeed: 5,
+	};
 	const testForecast: IDailyForecast[] = [
 		{ dayOfWeek: "Monday", minTemperature: 0, maxTemperature: 20 },
 		{ dayOfWeek: "Tuesday", minTemperature: 1, maxTemperature: 21 },
@@ -33,9 +54,10 @@ describe("Weather", () => {
 		});
 
 		it("Should correctly create weather/getForecastSuccess action with payload", () => {
-			const actual = getForecastSuccess(testForecast);
+			const actual = getForecastSuccess({ current: testCurrent, forecast: testForecast });
 
-			expect(actual.payload).toEqual(testForecast);
+			expect(actual.payload.current).toEqual(testCurrent);
+			expect(actual.payload.forecast).toEqual(testForecast);
 		});
 
 		it("Should correctly create weather/getForecastError action with payload", () => {
@@ -46,13 +68,16 @@ describe("Weather", () => {
 		});
 
 		it("Should dispatch correct actions for successful fetch of forecast", async () => {
-			(weatherApi as any)._setMockData(testForecast);
+			(weatherApi as any)._setMockData({ forecast: testForecast, current: testCurrent });
 			const dispatchMock = jest.fn();
 			const expectedFirstArgs = { type: "weather/getForecastStart" };
-			const expectedSecondArgs = { type: "weather/getForecastSuccess", payload: testForecast };
+			const expectedSecondArgs = {
+				type: "weather/getForecastSuccess",
+				payload: { current: testCurrent, forecast: testForecast },
+			};
 			const action = fetchWeatherForecast("Odesa");
 
-			await action(dispatchMock, () => ({ weather: { isLoading: false, forecast: [] } }), {});
+			await action(dispatchMock, () => ({ weather: { isLoading: false, current: null, forecast: [] } }), {});
 
 			expect(dispatchMock).toBeCalledTimes(2);
 			expect(dispatchMock.mock.calls[0][0]).toEqual(expectedFirstArgs);
@@ -65,7 +90,7 @@ describe("Weather", () => {
 			const expectedSecondArgs = { type: "weather/getForecastError", payload: "Error: Cannot fetch forecast" };
 			const action = fetchWeatherForecast("invalid");
 
-			await action(dispatchMock, () => ({ weather: { isLoading: false, forecast: [] } }), "");
+			await action(dispatchMock, () => ({ weather: { isLoading: false, current: null, forecast: [] } }), "");
 
 			expect(dispatchMock).toBeCalledTimes(2);
 			expect(dispatchMock.mock.calls[0][0]).toEqual(expectedFirstArgs);
@@ -79,6 +104,7 @@ describe("Weather", () => {
 			const expected: IWeatherState = {
 				isLoading: false,
 				forecast: [],
+				current: null,
 				errorMessage: "",
 			};
 
@@ -89,6 +115,7 @@ describe("Weather", () => {
 			const testAction = { type: "weather/getForecastStart" };
 			const expected: IWeatherState = {
 				isLoading: true,
+				current: null,
 				forecast: [],
 				errorMessage: "",
 			};
@@ -98,14 +125,19 @@ describe("Weather", () => {
 		});
 
 		it("Should correctly process getForecastSuccess action", () => {
-			const testAction = { type: "weather/getForecastSuccess", payload: testForecast };
+			const testAction = {
+				type: "weather/getForecastSuccess",
+				payload: { current: testCurrent, forecast: testForecast },
+			};
 			const expected: IWeatherState = {
 				isLoading: false,
+				current: testCurrent,
 				forecast: testForecast,
 				errorMessage: "",
 			};
 			const initialState: IWeatherState = {
 				isLoading: true,
+				current: null,
 				forecast: [],
 				errorMessage: "",
 			};
@@ -119,11 +151,13 @@ describe("Weather", () => {
 			const testAction = { type: "weather/getForecastError", payload: testError };
 			const expected: IWeatherState = {
 				isLoading: false,
+				current: null,
 				forecast: [],
 				errorMessage: testError,
 			};
 			const initialState: IWeatherState = {
 				isLoading: true,
+				current: null,
 				forecast: [],
 				errorMessage: "",
 			};

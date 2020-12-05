@@ -8,13 +8,37 @@ export interface IDailyForecast {
 	readonly dayOfWeek: string;
 }
 
+export interface ICurrentWeather {
+	readonly date: number;
+	readonly sunrise: number;
+	readonly sunset: number;
+	readonly temperature: number;
+	readonly feelsLike: number;
+	readonly pressure: number;
+	readonly humidity: number;
+	readonly clouds: number;
+	readonly uvIndex: number;
+	readonly visibility: number;
+	readonly windSpeed: number;
+	readonly windDeg: number;
+	readonly rain?: number;
+	readonly snow?: number;
+	readonly weather: {
+		readonly id: number;
+		readonly main: string;
+		readonly description: string;
+		readonly icon: string;
+	};
+}
 export interface IWeatherState {
 	readonly isLoading: boolean;
 	readonly errorMessage?: string;
+	readonly current: ICurrentWeather | null;
 	readonly forecast: IDailyForecast[];
 }
 
 const initialState: IWeatherState = {
+	current: null,
 	forecast: [],
 	isLoading: false,
 	errorMessage: "",
@@ -27,10 +51,11 @@ const weatherSlice = createSlice({
 		getForecastStart(state) {
 			state.isLoading = true;
 		},
-		getForecastSuccess(state, action: PayloadAction<IDailyForecast[]>) {
+		getForecastSuccess(state, action: PayloadAction<Pick<IWeatherState, "current" | "forecast">>) {
 			state.isLoading = false;
 			state.errorMessage = "";
-			state.forecast = action.payload;
+			state.current = action.payload.current;
+			state.forecast = action.payload.forecast;
 		},
 		getForecastError(state, action: PayloadAction<string>) {
 			state.isLoading = false;

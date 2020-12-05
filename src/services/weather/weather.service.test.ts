@@ -1,5 +1,5 @@
 import * as weatherService from "@services/weather";
-import { IDailyForecast } from "@src/redux/reducers/weather";
+import { ICurrentWeather, IDailyForecast } from "@redux/reducers/weather";
 import * as weatherApi from "@utils/weather-api";
 import * as geolocationApi from "@utils/geolocation-api";
 
@@ -59,9 +59,34 @@ describe("Weather service", () => {
 		return data;
 	};
 	const testResponse = generateTestData();
+	/* eslint-disable camelcase */
+	const testCurrent: weatherApi.IGetForecastResponse["current"] = {
+		dt: 1607181931,
+		sunrise: 1607145905,
+		sunset: 1607177458,
+		temp: 1,
+		feels_like: -6.17,
+		pressure: 1027,
+		humidity: 80,
+		dew_point: -1.82,
+		uvi: 0,
+		clouds: 90,
+		visibility: 10000,
+		wind_speed: 7,
+		wind_deg: 60,
+		weather: [
+			{
+				id: 804,
+				main: "Clouds",
+				description: "overcast clouds",
+				icon: "04n",
+			},
+		],
+	};
+	/* eslint-enable camelcase */
 
 	beforeAll(() => {
-		(weatherApi as any)._setMockData(testResponse);
+		(weatherApi as any)._setMockData({ current: testCurrent, forecast: testResponse });
 	});
 
 	afterAll(() => {
@@ -70,7 +95,27 @@ describe("Weather service", () => {
 	});
 
 	it("Should correctly map API response", async () => {
-		const expected: IDailyForecast[] = [
+		const expectedCurrent: ICurrentWeather = {
+			clouds: 90,
+			date: 1607181931000,
+			feelsLike: -6.17,
+			humidity: 80,
+			pressure: 1027,
+			sunrise: 1607145905000,
+			sunset: 1607177458000,
+			temperature: 1,
+			uvIndex: 0,
+			visibility: 10000,
+			weather: {
+				description: "overcast clouds",
+				icon: "04n",
+				id: 804,
+				main: "Clouds",
+			},
+			windDeg: 60,
+			windSpeed: 7,
+		};
+		const expectedForecast: IDailyForecast[] = [
 			{ dayOfWeek: "Monday", minTemperature: 0, maxTemperature: 25 },
 			{ dayOfWeek: "Tuesday", minTemperature: 1, maxTemperature: 26 },
 			{ dayOfWeek: "Wednesday", minTemperature: 2, maxTemperature: 27 },
@@ -82,6 +127,7 @@ describe("Weather service", () => {
 
 		const actual = await weatherService.getWeatherForecast("Odesa");
 
-		expect(actual).toEqual(expected);
+		expect(actual.current).toEqual(expectedCurrent);
+		expect(actual.forecast).toEqual(expectedForecast);
 	});
 });
