@@ -20,11 +20,11 @@ export const GraphTooltip: React.FC<TooltipProps> = (props) => {
 			<Divider className={classes.divider} />
 			<Typography className={classes.minTemperatureLabel}>
 				{formatName(props.payload[0].name)}: {props.payload[0].value > 0 ? "+" : ""}
-				{props.payload[0].value}
+				{Math.round(+props.payload[0].value)}
 			</Typography>
 			<Typography className={classes.maxTemperatureLabel}>
 				{formatName(props.payload[1].name)}: {props.payload[1].value > 0 ? "+" : ""}
-				{props.payload[1].value}
+				{Math.round(+props.payload[1].value)}
 			</Typography>
 		</Paper>
 	);

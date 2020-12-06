@@ -1,0 +1,179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tab controls component Rendering Should render correctly on large screen 1`] = `
+<div
+  class="MuiTabs-root"
+>
+  <div
+    class="MuiTabs-scroller MuiTabs-fixed"
+    style="overflow: hidden;"
+  >
+    <div
+      aria-label="tabs control to pick between week forecast and current weather"
+      class="MuiTabs-flexContainer MuiTabs-centered"
+      role="tablist"
+    >
+      <button
+        aria-controls="forecast-panel"
+        aria-label="forecast tab"
+        aria-selected="true"
+        class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary MuiTab-selected"
+        id="forecast-tab"
+        role="tab"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          class="MuiTab-wrapper"
+        >
+          Forecast
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+      <button
+        aria-controls="current-weather-panel"
+        aria-label="current weather tab"
+        aria-selected="false"
+        class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary"
+        id="current-weather-tab"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="MuiTab-wrapper"
+        >
+          Current weather
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+    <span
+      class="PrivateTabIndicator-root PrivateTabIndicator-colorPrimary MuiTabs-indicator"
+      style="left: 0px; width: 0px;"
+    />
+  </div>
+</div>
+`;
+
+exports[`Tab controls component Rendering Should render correctly on small screens 1`] = `
+<div
+  class="MuiTabs-root"
+>
+  <div
+    class="MuiTabs-scroller MuiTabs-fixed"
+    style="overflow: hidden;"
+  >
+    <div
+      aria-label="tabs control to pick between week forecast and current weather"
+      class="MuiTabs-flexContainer"
+      role="tablist"
+    >
+      <button
+        aria-controls="forecast-panel"
+        aria-label="forecast tab"
+        aria-selected="true"
+        class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary MuiTab-selected MuiTab-fullWidth"
+        id="forecast-tab"
+        role="tab"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          class="MuiTab-wrapper"
+        >
+          Forecast
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+      <button
+        aria-controls="current-weather-panel"
+        aria-label="current weather tab"
+        aria-selected="false"
+        class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth"
+        id="current-weather-tab"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="MuiTab-wrapper"
+        >
+          Current weather
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+    <span
+      class="PrivateTabIndicator-root PrivateTabIndicator-colorPrimary MuiTabs-indicator"
+      style="left: 0px; width: 0px;"
+    />
+  </div>
+</div>
+`;
+
+exports[`Tab controls component Rendering Should render correctly with disabled current weather tab 1`] = `
+<div
+  class="MuiTabs-root"
+>
+  <div
+    class="MuiTabs-scroller MuiTabs-fixed"
+    style="overflow: hidden;"
+  >
+    <div
+      aria-label="tabs control to pick between week forecast and current weather"
+      class="MuiTabs-flexContainer MuiTabs-centered"
+      role="tablist"
+    >
+      <button
+        aria-controls="forecast-panel"
+        aria-label="forecast tab"
+        aria-selected="true"
+        class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary MuiTab-selected"
+        id="forecast-tab"
+        role="tab"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          class="MuiTab-wrapper"
+        >
+          Forecast
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+      <button
+        aria-controls="current-weather-panel"
+        aria-label="current weather tab"
+        aria-selected="false"
+        class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary MuiTab-disabled MuiButtonBase-disabled"
+        disabled=""
+        id="current-weather-tab"
+        role="tab"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="MuiTab-wrapper"
+        >
+          Current weather
+        </span>
+      </button>
+    </div>
+    <span
+      class="PrivateTabIndicator-root PrivateTabIndicator-colorPrimary MuiTabs-indicator"
+      style="left: 0px; width: 0px;"
+    />
+  </div>
+</div>
+`;

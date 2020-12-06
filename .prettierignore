@@ -6,3 +6,4 @@ build/*
 scripts/*
 public/*
 package-lock.json
+coverage/*

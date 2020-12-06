@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import {
 	BarChart,
 	Bar,
@@ -28,7 +28,7 @@ export interface IForecastGraphProps {
 	hasError?: boolean;
 }
 
-export const ForecastGraph: React.FC<IForecastGraphProps> = ({ data, loading = false, hasError = false }) => {
+export const ForecastGraph: React.FC<IForecastGraphProps> = memo(({ data, loading = false, hasError = false }) => {
 	const classes = useStyles();
 	const minFillColor = blue[600];
 	const maxFillColor = amber[900];
@@ -81,4 +81,6 @@ export const ForecastGraph: React.FC<IForecastGraphProps> = ({ data, loading = f
 			</ResponsiveContainer>
 		</LoadingComponent>
 	);
-};
+});
+
+ForecastGraph.displayName = "ForecastGraph";

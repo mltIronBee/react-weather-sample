@@ -8,6 +8,7 @@ import * as SnackbarApi from "@containers/snackbar";
 import { AppActions, IAppState } from "@redux/reducers";
 import { IForecastGraphProps } from "@components/weather/forecast-graph";
 import * as weatherService from "@services/weather";
+import * as geolocationService from "@services/geolocation";
 import { ICurrentWeather } from "@redux/reducers/weather";
 
 jest.mock("recharts");
@@ -87,7 +88,7 @@ describe("Weather forecast container", () => {
 				const store = configureStore<IAppState, AppActions>(middleware)({
 					weather: {
 						isLoading: false,
-						current: testCurrent,
+						current: null,
 						forecast: [],
 						errorMessage: "",
 					},
@@ -227,6 +228,137 @@ describe("Weather forecast container", () => {
 				} catch (e) {
 					expect(_errorMock).toBeCalledWith(testError);
 				}
+			});
+		});
+
+		describe("Geolocation flow", () => {
+			const createStore = configureStore<IAppState>(middleware);
+			const store = createStore({
+				weather: {
+					isLoading: false,
+					current: null,
+					forecast: [],
+					errorMessage: "",
+				},
+			});
+			const getLocationSpy = jest.spyOn(geolocationService, "getCurrentLocation");
+			const oldGeolocation = global.navigator.geolocation;
+			const { SnackbarProvider, _showMock, _errorMock, _resetHistory } = SnackbarApi as any;
+
+			beforeAll(() => {
+				(global.navigator as any).geolocation = {
+					getCurrentPosition: jest.fn(),
+				};
+			});
+
+			beforeEach(() => {
+				getLocationSpy.mockReset();
+				_resetHistory();
+			});
+
+			afterAll(() => {
+				(global.navigator as any).geolocation = oldGeolocation;
+				getLocationSpy.mockRestore();
+			});
+
+			it("Should use geolocation feature to retrieve users location and put it to the search field", async () => {
+				const testLocation = "Test location, Test city";
+
+				render(
+					<Provider store={store}>
+						<SnackbarProvider>
+							<WeatherForecast />
+						</SnackbarProvider>
+					</Provider>,
+				);
+
+				getLocationSpy.mockImplementationOnce(() =>
+					Promise.resolve({ location: testLocation, coordinates: { lat: 40, lng: 30 } }),
+				);
+
+				fireEvent.click(screen.getByLabelText(/^get current location$/i));
+
+				const searchInput = await waitFor(() => screen.findByLabelText(/^search city$/i));
+
+				expect(searchInput).toHaveValue(testLocation);
+			});
+
+			it("Should display error message, if error occurred during geolocation retrieval", async () => {
+				render(
+					<Provider store={store}>
+						<SnackbarProvider>
+							<WeatherForecast />
+						</SnackbarProvider>
+					</Provider>,
+				);
+
+				const testMessage = "Test network error";
+
+				getLocationSpy.mockImplementationOnce(() => Promise.reject({ isAxiosError: true, message: testMessage }));
+
+				const geolocationSearchButton = screen.getByLabelText(/^get current location$/i);
+
+				fireEvent.click(geolocationSearchButton);
+
+				await waitFor(() => {
+					try {
+						expect(_showMock).toBeCalledWith(testMessage, "error");
+					} catch (_) {
+						expect(_errorMock).toBeCalledWith(testMessage);
+					}
+				});
+
+				expect(geolocationSearchButton).not.toBeDisabled();
+			});
+
+			it("Should disable geolocation search, if permission was declined or geolocation is failing", async () => {
+				render(
+					<Provider store={store}>
+						<SnackbarProvider>
+							<WeatherForecast />
+						</SnackbarProvider>
+					</Provider>,
+				);
+
+				const testMessage = "Test geolocation error";
+
+				getLocationSpy.mockImplementationOnce(() => Promise.reject({ message: testMessage }));
+
+				const geolocationSearchButton = screen.getByLabelText(/^get current location$/i);
+
+				fireEvent.click(geolocationSearchButton);
+
+				await waitFor(() => {
+					try {
+						expect(_showMock).toBeCalledWith(testMessage, "error");
+					} catch (_) {
+						expect(_errorMock).toBeCalledWith(testMessage);
+					}
+				});
+
+				expect(geolocationSearchButton).toBeDisabled();
+			});
+		});
+
+		describe("Controls appearance", () => {
+			it("Should disable current weather tab, when current weather is not loaded", () => {
+				const createStore = configureStore<IAppState>(middleware);
+				const store = createStore({
+					weather: {
+						isLoading: false,
+						current: null,
+						forecast: [],
+						errorMessage: "",
+					},
+				});
+
+				render(
+					<Provider store={store}>
+						<WeatherForecast />
+					</Provider>,
+				);
+
+				expect(screen.getByLabelText(/^current weather tab$/i)).toBeDisabled();
 			});
 		});
 	});
