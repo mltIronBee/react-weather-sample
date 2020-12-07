@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/mltIronBee/react-weather-sample.svg?token=J2zY8D7E9QYCeRVV5pEH&branch=master)](https://travis-ci.com/mltIronBee/react-weather-sample)
+[![codecov](https://codecov.io/gh/mltIronBee/react-weather-sample/branch/master/graph/badge.svg?token=JLU3V1MK6I)](https://codecov.io/gh/mltIronBee/react-weather-sample)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
