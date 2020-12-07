@@ -1,6 +1,7 @@
 {
-	"name": "weather-test",
-	"version": "0.1.0",
+	"name": "react-weather-sample",
+	"homepage": "https://mltironbee.github.io/react-weather-sample",
+	"version": "1.0.0",
 	"private": true,
 	"dependencies": {
 		"@babel/core": "7.12.3",
