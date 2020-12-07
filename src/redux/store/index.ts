@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { configureStore, EnhancedStore, ThunkAction } from "@reduxjs/toolkit";
 import { rootReducer, IAppState, AppActions } from "@redux/reducers";
 

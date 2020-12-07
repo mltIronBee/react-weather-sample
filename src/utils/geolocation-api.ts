@@ -54,6 +54,24 @@ export const getCurrentPosition = (): Promise<[lat: number, lng: number]> =>
 			(position) => {
 				resolve([position.coords.latitude, position.coords.longitude]);
 			},
-			(error) => reject(error),
+			(error) => {
+				let message: string;
+
+				switch (error.code) {
+					case error.PERMISSION_DENIED:
+						message = "Cannot retrieve current location because permission was not granted";
+						break;
+					case error.POSITION_UNAVAILABLE:
+						message = "Current position is not available";
+						break;
+					case error.TIMEOUT:
+						message = "Geolocation request timed out";
+						break;
+					default:
+						message = "Unexpected error has occurred while trying to determine current position";
+				}
+
+				reject(new Error(message));
+			},
 		);
 	});
