@@ -20,7 +20,7 @@ describe("Weather API", () => {
 				lon: DEFAULT_COORDS.lng,
 				units: "metric",
 				exclude: "minutely,hourly,alerts",
-				appid: process.env.WEATHER_API_KEY,
+				appid: process.env.REACT_APP_WEATHER_API_KEY,
 			},
 		});
 	});
