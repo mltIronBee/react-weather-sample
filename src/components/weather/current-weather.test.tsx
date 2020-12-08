@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen } from "@utils/test-utils";
 import { CurrentWeather, ICurrentWeatherProps } from "@components/weather";
+import { normalizeAngle } from "@utils/angle";
 import "@testing-library/jest-dom/extend-expect";
 
 describe("Current weather component", () => {
@@ -42,27 +43,17 @@ describe("Current weather component", () => {
 	});
 
 	describe("Wind direction", () => {
-		const normalizeAngle = (angle: number): number => {
-			if (angle < 0) {
-				return normalizeAngle(360 + angle);
-			} else if (angle > 360) {
-				return normalizeAngle(angle - 360);
-			}
-
-			return angle;
-		};
-
 		it("Should display correct wind direction for different wind degrees", () => {
 			// Generates an array with degrees of wind direction in a way, that each direction has 3 values of degrees
 			const windDirections = Array.from(new Array(24)).map((_, i) => normalizeAngle(-22.5 + 15 * (i + 1)));
-			const northDirections = windDirections.slice(0, 3);
-			const northEastDirections = windDirections.slice(3, 6);
-			const eastDirections = windDirections.slice(6, 9);
-			const southEastDirections = windDirections.slice(9, 12);
-			const southDirections = windDirections.slice(12, 15);
-			const southWestDirections = windDirections.slice(15, 18);
-			const westDirections = windDirections.slice(18, 21);
-			const northWestDirections = windDirections.slice(21, 24);
+			const southDirections = windDirections.slice(0, 3);
+			const southWestDirections = windDirections.slice(3, 6);
+			const westDirections = windDirections.slice(6, 9);
+			const northWestDirections = windDirections.slice(9, 12);
+			const northDirections = windDirections.slice(12, 15);
+			const northEastDirections = windDirections.slice(15, 18);
+			const eastDirections = windDirections.slice(18, 21);
+			const southEastDirections = windDirections.slice(21, 24);
 
 			const { rerender } = render(<CurrentWeather {...defaultProps} />);
 

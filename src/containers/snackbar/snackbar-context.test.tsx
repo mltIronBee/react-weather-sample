@@ -213,5 +213,48 @@ describe("Snackbar container", () => {
 			expect(actual.messageQueue).not.toContain(removedMessage);
 			expect(actual.isHidden).toEqual(true);
 		});
+
+		it("Should do nothing, when unknown action is dispatched", () => {
+			const initialState: ISnackbarProviderState = {
+				isHidden: true,
+				isOpened: false,
+				messageQueue: [],
+			};
+			const showingSnackbarState: ISnackbarProviderState = {
+				isHidden: false,
+				isOpened: true,
+				messageQueue: generateRandomMessages(),
+			};
+			const messageClosingMessagesState: ISnackbarProviderState = {
+				isHidden: false,
+				isOpened: false,
+				messageQueue: generateRandomMessages(),
+			};
+			const messageClosedState: ISnackbarProviderState = {
+				isHidden: true,
+				isOpened: false,
+				messageQueue: generateRandomMessages(),
+			};
+			const testActionObject = { type: "TEST_NON_EXISTING" };
+			const testActionWithoutType = "foobar";
+
+			const actualInitialObject = snackbarReducer(initialState, testActionObject);
+			const actualInitialWithoutType = snackbarReducer(initialState, testActionWithoutType);
+			const actualShowingObject = snackbarReducer(showingSnackbarState, testActionObject);
+			const actualShowingWithoutType = snackbarReducer(showingSnackbarState, testActionWithoutType);
+			const actualClosingObject = snackbarReducer(messageClosingMessagesState, testActionObject);
+			const actualClosingWithoutType = snackbarReducer(messageClosingMessagesState, testActionWithoutType);
+			const actualClosedObject = snackbarReducer(messageClosedState, testActionObject);
+			const actualClosedWithoutType = snackbarReducer(messageClosedState, testActionWithoutType);
+
+			expect(actualInitialObject).toEqual(initialState);
+			expect(actualInitialWithoutType).toEqual(initialState);
+			expect(actualShowingObject).toEqual(showingSnackbarState);
+			expect(actualShowingWithoutType).toEqual(showingSnackbarState);
+			expect(actualClosingObject).toEqual(messageClosingMessagesState);
+			expect(actualClosingWithoutType).toEqual(messageClosingMessagesState);
+			expect(actualClosedObject).toEqual(messageClosedState);
+			expect(actualClosedWithoutType).toEqual(messageClosedState);
+		});
 	});
 });

@@ -90,4 +90,53 @@ describe("Geolocation API", () => {
 			expect(e.message).toMatch(/permission/i);
 		}
 	});
+
+	it("Should produce correct error message according to the error code", async () => {
+		const errorBase = {
+			PERMISSION_DENIED: 1,
+			POSITION_UNAVAILABLE: 2,
+			TIMEOUT: 3,
+		};
+		const testPermissionError = Object.create(errorBase, {
+			code: { value: 1 },
+			message: { value: "[built-in] permissions error" },
+		});
+		const testUnavailableError = Object.create(errorBase, {
+			code: { value: 2 },
+			message: { value: "[built-in] position unavailable error" },
+		});
+		const testTimeoutError = Object.create(errorBase, {
+			code: { value: 3 },
+			message: { value: "[built-in] timeout error" },
+		});
+		const messages = [/permission/i, /(unavailable|not available)/i, /(timed out|timeout)/i];
+
+		getCurrentPositionMock
+			.mockImplementationOnce((_, error) => {
+				if (error) {
+					error(testPermissionError);
+				}
+			})
+			.mockImplementationOnce((_, error) => {
+				if (error) {
+					error(testUnavailableError);
+				}
+			})
+			.mockImplementationOnce((_, error) => {
+				if (error) {
+					error(testTimeoutError);
+				}
+			});
+
+		expect.assertions(6);
+
+		for (let i = 0; i < 3; i++) {
+			try {
+				await geolocationApi.getCurrentPosition();
+			} catch (error) {
+				expect(error.message).not.toMatch(/^\[built-in\]/i);
+				expect(error.message).toMatch(messages[i]);
+			}
+		}
+	});
 });

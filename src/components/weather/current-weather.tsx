@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
@@ -18,6 +18,7 @@ import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import RainIcon from "@components/icons/rain";
 import SunriseIcon from "@components/icons/sunrise";
 import SunsetIcon from "@components/icons/sunset";
+import { invertDirection } from "@utils/angle";
 
 export interface ICurrentWeatherProps {
 	date: string;
@@ -62,7 +63,8 @@ const getReadableWindDirection = (windDeg: number): string => {
 };
 
 export const CurrentWeather: React.FC<ICurrentWeatherProps> = memo((props) => {
-	const classes = useStyles(props.windDeg);
+	const invertedAngle = useMemo(() => invertDirection(props.windDeg), [props.windDeg]);
+	const classes = useStyles(invertedAngle);
 
 	return (
 		<Grid container>
@@ -161,7 +163,7 @@ export const CurrentWeather: React.FC<ICurrentWeatherProps> = memo((props) => {
 						<ListItemIcon>
 							<ArrowUpwardIcon className={classes.windDirectionIcon} />
 						</ListItemIcon>
-						<ListItemText primary={getReadableWindDirection(props.windDeg)} secondary="Wind direction" />
+						<ListItemText primary={getReadableWindDirection(invertedAngle)} secondary="Wind direction" />
 					</ListItem>
 				</List>
 			</Grid>

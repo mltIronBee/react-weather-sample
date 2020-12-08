@@ -366,7 +366,7 @@ exports[`Current weather component Rendering Should render correctly with rain 1
           <span
             class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
           >
-            North-East
+            South-West
           </span>
           <p
             class="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
@@ -742,7 +742,7 @@ exports[`Current weather component Rendering Should render correctly with snow 1
           <span
             class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
           >
-            North-East
+            South-West
           </span>
           <p
             class="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
@@ -1083,7 +1083,7 @@ exports[`Current weather component Rendering Should render correctly without rai
           <span
             class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
           >
-            North-East
+            South-West
           </span>
           <p
             class="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
