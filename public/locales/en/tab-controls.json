@@ -1,0 +1,7 @@
+{
+  "current-weather-tab-aria-label": "current weather tab",
+  "current-weather-tab-label": "Current Weather",
+  "forecast-tab-aria-label": "forecast tab",
+  "forecast-tab-label": "Forecast",
+  "tabs-aria-label": "tabs control to pick between week forecast and current weather"
+}

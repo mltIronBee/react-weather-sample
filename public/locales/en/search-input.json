@@ -1,0 +1,10 @@
+{
+  "label": "Search city",
+  "location-not-available": "Geolocation is not available",
+  "location-not-available-aria": "geolocation is not available",
+  "placeholder": "Enter city to search",
+  "search-aria-label": "search",
+  "search-tooltip": "Search",
+  "use-location-aria-label": "use current location",
+  "use-location-tooltip": "Use current location"
+}

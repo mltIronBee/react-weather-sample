@@ -1,0 +1,8 @@
+{
+  "legend-max": "Max",
+  "legend-min": "Min",
+  "load-error": "An error has occurred while loading graph data",
+  "no-data-hint": "To display forecast graph enter your city name in search field and hit",
+  "tooltip-max": "Max Temperature",
+  "tooltip-min": "Min Temperature"
+}

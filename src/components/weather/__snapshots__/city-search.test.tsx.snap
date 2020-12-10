@@ -33,7 +33,7 @@ exports[`City search input Rendering Should correctly render error message and o
           title="Use current location"
         >
           <button
-            aria-label="get current location"
+            aria-label="use current location"
             class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton"
             tabindex="0"
             type="button"
@@ -62,7 +62,7 @@ exports[`City search input Rendering Should correctly render error message and o
           title="Search"
         >
           <button
-            aria-label="Search"
+            aria-label="search"
             class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton"
             tabindex="0"
             type="submit"
@@ -142,7 +142,7 @@ exports[`City search input Rendering Should correctly render input during loadin
           title="Use current location"
         >
           <button
-            aria-label="get current location"
+            aria-label="use current location"
             class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton"
             tabindex="0"
             type="button"
@@ -235,7 +235,7 @@ exports[`City search input Rendering Should render correctly 1`] = `
           title="Use current location"
         >
           <button
-            aria-label="get current location"
+            aria-label="use current location"
             class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton"
             tabindex="0"
             type="button"
@@ -264,7 +264,7 @@ exports[`City search input Rendering Should render correctly 1`] = `
           title="Search"
         >
           <button
-            aria-label="Search"
+            aria-label="search"
             class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton"
             tabindex="0"
             type="submit"

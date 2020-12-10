@@ -8,6 +8,7 @@ import GpsIcon from "@material-ui/icons/GpsFixed";
 import GpsOffIcon from "@material-ui/icons/GpsOff";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import useStyles from "@components/weather/city-search.styles";
+import { useTranslation } from "react-i18next";
 
 export interface ICitySearchProps {
 	value: string;
@@ -21,14 +22,15 @@ export interface ICitySearchProps {
 
 export const CitySearch: React.FC<ICitySearchProps> = (props) => {
 	const classes = useStyles();
+	const { t } = useTranslation(["search-input"]);
 
 	return (
 		<form onSubmit={props.onSearch}>
 			<TextField
 				fullWidth
 				id="city-search"
-				label="Search city"
-				placeholder="Enter city to search"
+				label={t("search-input:label")} //"Search city"
+				placeholder={t("search-input:placeholder")} //"Enter city to search"
 				error={!!props.errorMessage}
 				helperText={props.errorMessage}
 				value={props.value}
@@ -37,11 +39,21 @@ export const CitySearch: React.FC<ICitySearchProps> = (props) => {
 				InputProps={{
 					endAdornment: (
 						<InputAdornment position="end">
-							<Tooltip title={props.geolocationAvailable ? "Use current location" : "Geolocation is not available"}>
+							<Tooltip
+								title={
+									props.geolocationAvailable
+										? (t("search-input:use-location-tooltip") as string) /*"Use current location"*/
+										: (t("search-input:location-not-available") as string) /*"Geolocation is not available"*/
+								}
+							>
 								<span>
 									<IconButton
 										disabled={!props.geolocationAvailable}
-										aria-label="get current location"
+										aria-label={
+											props.geolocationAvailable
+												? t("search-input:use-location-aria-label") /*"get current location"*/
+												: t("search-input:location-not-available-aria")
+										}
 										onClick={props.onGetLocation}
 										className={classes.iconButton}
 									>
@@ -52,14 +64,14 @@ export const CitySearch: React.FC<ICitySearchProps> = (props) => {
 							{props.searching ? (
 								<CircularProgress className={classes.loadingIcon} size={24} />
 							) : (
-								<Tooltip title="Search">
+								<Tooltip title={t("search-input:search-tooltip") as string}>
 									<span>
 										<IconButton
 											disabled={!props.value}
 											className={classes.iconButton}
 											component="button"
 											type="submit"
-											aria-label="Search"
+											aria-label={t("search-input:search-aria-label")}
 										>
 											<SearchIcon />
 										</IconButton>

@@ -1,0 +1,7 @@
+{
+  "current-weather-tab-aria-label": "вкладка поточної погоди",
+  "current-weather-tab-label": "Поточна погода",
+  "forecast-tab-aria-label": "вкладка прогнозу погоди",
+  "forecast-tab-label": "Прогноз погоди",
+  "tabs-aria-label": "кнопки для керування переходу між вкладками поточної погоди та прогнозу погоди"
+}

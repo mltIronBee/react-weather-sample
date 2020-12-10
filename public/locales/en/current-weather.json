@@ -1,0 +1,22 @@
+{
+  "atmospheric-pressure": "Atmospheric pressure",
+  "clouds": "Clouds",
+  "east": "East",
+  "feels-like": "Feels like",
+  "humidity": "Humidity",
+  "north": "North",
+  "north-east": "North-East",
+  "north-west": "North-West",
+  "rain": "Rain last 1 hour",
+  "snow": "Snow last 1 hour",
+  "south": "South",
+  "south-east": "South-East",
+  "south-west": "South-West",
+  "sunrise-at": "Sunrise at",
+  "sunset-at": "Sunset at",
+  "uv-index": "Midday UV Index",
+  "visibility": "Visibility",
+  "west": "West",
+  "wind-direction": "Wind direction",
+  "wind-speed": "Wind speed"
+}

@@ -6,6 +6,7 @@ import createStore from "@redux/store";
 import { SnackbarProvider } from "@containers/snackbar";
 import App from "@src/App";
 import reportWebVitals from "@src/reportWebVitals";
+import "@src/i18n";
 
 const store = createStore();
 

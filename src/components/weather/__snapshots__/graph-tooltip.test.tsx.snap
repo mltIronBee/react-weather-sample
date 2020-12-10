@@ -23,7 +23,7 @@ exports[`Graph tooltip Rendering Should render correctly 1`] = `
   <p
     class="MuiTypography-root makeStyles-maxTemperatureLabel MuiTypography-body1"
   >
-    Min Temperature
+    Max Temperature
     : 
     
     -10

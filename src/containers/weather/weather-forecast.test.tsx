@@ -276,7 +276,7 @@ describe("Weather forecast container", () => {
 					Promise.resolve({ location: testLocation, coordinates: { lat: 40, lng: 30 } }),
 				);
 
-				fireEvent.click(screen.getByLabelText(/^get current location$/i));
+				fireEvent.click(screen.getByLabelText(/^use current location$/i));
 
 				const searchInput = await waitFor(() => screen.findByLabelText(/^search city$/i));
 
@@ -296,7 +296,7 @@ describe("Weather forecast container", () => {
 
 				getLocationSpy.mockImplementationOnce(() => Promise.reject({ isAxiosError: true, message: testMessage }));
 
-				const geolocationSearchButton = screen.getByLabelText(/^get current location$/i);
+				const geolocationSearchButton = screen.getByLabelText(/^use current location$/i);
 
 				fireEvent.click(geolocationSearchButton);
 
@@ -324,7 +324,7 @@ describe("Weather forecast container", () => {
 
 				getLocationSpy.mockImplementationOnce(() => Promise.reject({ message: testMessage }));
 
-				const geolocationSearchButton = screen.getByLabelText(/^get current location$/i);
+				const geolocationSearchButton = screen.getByLabelText(/^use current location$/i);
 
 				fireEvent.click(geolocationSearchButton);
 
