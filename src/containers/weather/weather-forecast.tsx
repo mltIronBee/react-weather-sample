@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { ISnackbarContext, SnackbarContext } from "@containers/snackbar";
 import { CitySearch, CurrentWeather, ForecastGraph, ICurrentWeatherProps, TabControls } from "@components/weather";
-import { TabPanel } from "@components/common";
+import { LoadingComponent, TabPanel } from "@components/common";
 import { IAppState } from "@redux/reducers";
 import { fetchWeatherForecast, IWeatherState } from "@redux/reducers/weather";
 import { getCurrentLocation, ILatLng } from "@services/geolocation";
@@ -78,10 +78,12 @@ export const WeatherForecast: React.FC = () => {
 		}
 	}, [snackbar, dispatch]);
 
+	/* istanbul ignore next: this is a basic functionality of MUI tabs and doesn't require coverage */
 	const handleTabChange = useCallback((event: React.ChangeEvent<unknown>, value: number): void => {
 		setCurrentTab(value);
 	}, []);
 
+	/* istanbul ignore next: this is a basic functionality of swipable views lib and doesn't require coverage */
 	const handleChangeIndex = useCallback((index: number) => {
 		setCurrentTab(index);
 	}, []);
@@ -119,33 +121,36 @@ export const WeatherForecast: React.FC = () => {
 							onTabChange={handleTabChange}
 							largeScreen={isLargeScreen}
 						/>
-						<SwipeableViews
-							axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-							index={currentTab}
-							onChangeIndex={handleChangeIndex}
-						>
-							<TabPanel
-								id="forecast-panel"
-								aria-labelledby="forecast-tab"
-								value={currentTab}
-								index={0}
-								dir={theme.direction}
-								wrapperProps={{
-									className: classes.chart,
-								}}
+						<LoadingComponent loading={isLoading}>
+							<SwipeableViews
+								/* istanbul-ignore-next: JSDom does not support testing of such functionality, furthermore, it is basic functionality of swipeable views */
+								axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+								index={currentTab}
+								onChangeIndex={handleChangeIndex}
 							>
-								<ForecastGraph data={forecast} hasError={!!errorMessage} />
-							</TabPanel>
-							<TabPanel
-								id="current-weather-panel"
-								aria-labelledby="current-weather-tab"
-								value={currentTab}
-								index={1}
-								dir={theme.direction}
-							>
-								{currentWeatherProps && <CurrentWeather {...currentWeatherProps} />}
-							</TabPanel>
-						</SwipeableViews>
+								<TabPanel
+									id="forecast-panel"
+									aria-labelledby="forecast-tab"
+									value={currentTab}
+									index={0}
+									dir={theme.direction}
+									wrapperProps={{
+										className: classes.chart,
+									}}
+								>
+									<ForecastGraph data={forecast} hasError={!!errorMessage} />
+								</TabPanel>
+								<TabPanel
+									id="current-weather-panel"
+									aria-labelledby="current-weather-tab"
+									value={currentTab}
+									index={1}
+									dir={theme.direction}
+								>
+									{currentWeatherProps && <CurrentWeather {...currentWeatherProps} />}
+								</TabPanel>
+							</SwipeableViews>
+						</LoadingComponent>
 					</Grid>
 				</Grid>
 			</Paper>

@@ -17,6 +17,39 @@ const Template: Story<ComponentProps<typeof WeatherForecast> & { store: Enhanced
 	</Provider>
 );
 
+const weatherData = {
+	errorMessage: "",
+	current: {
+		clouds: 0,
+		date: Date.now(),
+		feelsLike: 16,
+		humidity: 80,
+		pressure: 1000,
+		sunrise: Date.now(),
+		sunset: Date.now(),
+		temperature: 20,
+		uvIndex: 0.7,
+		visibility: 10000,
+		weather: {
+			description: "clear sky",
+			icon: "01d",
+			id: 800,
+			main: "Clear",
+		},
+		windDeg: 100,
+		windSpeed: 5,
+	},
+	forecast: [
+		{ dayOfWeek: DateTime.local().set({ weekday: 1 }).toMillis(), minTemperature: -5, maxTemperature: -1 },
+		{ dayOfWeek: DateTime.local().set({ weekday: 2 }).toMillis(), minTemperature: -3, maxTemperature: 11 },
+		{ dayOfWeek: DateTime.local().set({ weekday: 3 }).toMillis(), minTemperature: 4, maxTemperature: 9 },
+		{ dayOfWeek: DateTime.local().set({ weekday: 4 }).toMillis(), minTemperature: 4, maxTemperature: 9 },
+		{ dayOfWeek: DateTime.local().set({ weekday: 5 }).toMillis(), minTemperature: 4, maxTemperature: 9 },
+		{ dayOfWeek: DateTime.local().set({ weekday: 6 }).toMillis(), minTemperature: 2, maxTemperature: 8 },
+		{ dayOfWeek: DateTime.local().set({ weekday: 7 }).toMillis(), minTemperature: 1, maxTemperature: 8 },
+	],
+};
+
 const defaultStore = createStore();
 const loadingStore = createStore({
 	geolocation: { lat: null, lng: null },
@@ -32,37 +65,19 @@ const loadedStore = createStore({
 		lng: DEFAULT_COORDS.lng,
 	},
 	weather: {
+		...weatherData,
 		isLoading: false,
-		errorMessage: "",
-		current: {
-			clouds: 0,
-			date: Date.now(),
-			feelsLike: 16,
-			humidity: 80,
-			pressure: 1000,
-			sunrise: Date.now(),
-			sunset: Date.now(),
-			temperature: 20,
-			uvIndex: 0.7,
-			visibility: 10000,
-			weather: {
-				description: "clear sky",
-				icon: "01d",
-				id: 800,
-				main: "Clear",
-			},
-			windDeg: 100,
-			windSpeed: 5,
-		},
-		forecast: [
-			{ dayOfWeek: DateTime.local().set({ weekday: 1 }).toMillis(), minTemperature: -5, maxTemperature: -1 },
-			{ dayOfWeek: DateTime.local().set({ weekday: 2 }).toMillis(), minTemperature: -3, maxTemperature: 11 },
-			{ dayOfWeek: DateTime.local().set({ weekday: 3 }).toMillis(), minTemperature: 4, maxTemperature: 9 },
-			{ dayOfWeek: DateTime.local().set({ weekday: 4 }).toMillis(), minTemperature: 4, maxTemperature: 9 },
-			{ dayOfWeek: DateTime.local().set({ weekday: 5 }).toMillis(), minTemperature: 4, maxTemperature: 9 },
-			{ dayOfWeek: DateTime.local().set({ weekday: 6 }).toMillis(), minTemperature: 2, maxTemperature: 8 },
-			{ dayOfWeek: DateTime.local().set({ weekday: 7 }).toMillis(), minTemperature: 1, maxTemperature: 8 },
-		],
+	},
+});
+
+const loadingWithDataStore = createStore({
+	geolocation: {
+		lat: DEFAULT_COORDS.lat,
+		lng: DEFAULT_COORDS.lng,
+	},
+	weather: {
+		...weatherData,
+		isLoading: true,
 	},
 });
 
@@ -76,6 +91,12 @@ export const Loading = Template.bind({});
 
 Loading.args = {
 	store: loadingStore,
+};
+
+export const LoadingWithData = Template.bind({});
+
+LoadingWithData.args = {
+	store: loadingWithDataStore,
 };
 
 export const WithError = Template.bind({});

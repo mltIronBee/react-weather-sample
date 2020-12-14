@@ -3,24 +3,21 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme: Theme) =>
 	createStyles({
-		loadingWrapper: {
-			position: "relative",
-			display: "inline-block",
-			height: "100%",
-			width: "100%",
-		},
-		loadingIndicatorContainer: {
-			display: "flex",
-			position: "absolute",
-			backgroundColor: "rgba(255, 255, 255, 0.75)",
-			top: 0,
-			left: 0,
-			right: 0,
-			bottom: 0,
+		backdrop: {
+			zIndex: theme.zIndex.drawer + 1,
 			flexDirection: "column",
-			justifyContent: "center",
-			alignItems: "center",
-			zIndex: theme.zIndex.mobileStepper - 1,
+			position: "absolute",
+			color:
+				theme.palette.type === "light"
+					? theme.palette.text.primary /* istanbul ignore next: palette type does not require test coverage */
+					: theme.palette.primary.contrastText,
+			backgroundColor:
+				theme.palette.type === "light"
+					? "rgba(255, 255, 255, 0.5)" /* istanbul ignore next: palette type does not require test coverage */
+					: "rgba(0, 0, 0, 0.5)",
+		},
+		backdropContainer: {
+			position: "relative",
 		},
 	}),
 );

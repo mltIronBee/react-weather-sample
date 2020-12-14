@@ -31,26 +31,6 @@ WithError.args = {
 	hasError: true,
 };
 
-export const LoadingWithoutData = Template.bind({});
-
-LoadingWithoutData.args = {
-	data: [],
-	loading: true,
-};
-
-export const LoadingWithData = Template.bind({});
-
-LoadingWithData.args = {
-	loading: true,
-};
-
-export const LoadingWithError = Template.bind({});
-
-LoadingWithError.args = {
-	loading: true,
-	hasError: true,
-};
-
 export default {
 	title: "Forecast chart component",
 	component: ForecastGraph,
