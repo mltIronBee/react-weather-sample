@@ -19,6 +19,7 @@ import RainIcon from "@components/icons/rain";
 import SunriseIcon from "@components/icons/sunrise";
 import SunsetIcon from "@components/icons/sunset";
 import { invertDirection } from "@utils/angle";
+import { useTranslation } from "react-i18next";
 
 export interface ICurrentWeatherProps {
 	date: string;
@@ -44,27 +45,28 @@ const formatTemperature = (temperature: number): string =>
 
 const getReadableWindDirection = (windDeg: number): string => {
 	if (windDeg > 337.5 || windDeg <= 22.5) {
-		return "North";
+		return "current-weather:north";
 	} else if (windDeg > 22.5 && windDeg <= 67.5) {
-		return "North-East";
+		return "current-weather:north-east";
 	} else if (windDeg > 67.5 && windDeg <= 112.5) {
-		return "East";
+		return "current-weather:east";
 	} else if (windDeg > 112.5 && windDeg <= 157.5) {
-		return "South-East";
+		return "current-weather:south-east";
 	} else if (windDeg > 157.5 && windDeg <= 202.5) {
-		return "South";
+		return "current-weather:south";
 	} else if (windDeg > 202.5 && windDeg <= 247.5) {
-		return "South-West";
+		return "current-weather:south-west";
 	} else if (windDeg > 247.5 && windDeg <= 292.5) {
-		return "West";
+		return "current-weather:west";
 	}
 
-	return "North-West";
+	return "current-weather:north-west";
 };
 
 export const CurrentWeather: React.FC<ICurrentWeatherProps> = memo((props) => {
 	const invertedAngle = useMemo(() => invertDirection(props.windDeg), [props.windDeg]);
 	const classes = useStyles(invertedAngle);
+	const { t } = useTranslation(["current-weather", "units"]);
 
 	return (
 		<Grid container>
@@ -81,14 +83,14 @@ export const CurrentWeather: React.FC<ICurrentWeatherProps> = memo((props) => {
 						{formatTemperature(props.temperature)}&deg;
 					</Typography>
 					<Typography gutterBottom variant="h4">
-						Feels like: {formatTemperature(props.feelsLike)}&deg;
+						{t("current-weather:feels-like")}: {formatTemperature(props.feelsLike)}&deg;
 					</Typography>
 					<Typography gutterBottom component="span" className={classes.sunriseSunsetContainer}>
 						<Typography align="center" variant="h5" display="inline">
-							<SunriseIcon className={classes.sunriseIcon} /> Sunrise at {props.sunrise}
+							<SunriseIcon className={classes.sunriseIcon} /> {t("current-weather:sunrise-at")} {props.sunrise}
 						</Typography>
 						<Typography align="center" variant="h5" display="inline">
-							<SunsetIcon className={classes.sunsetIcon} /> Sunset at {props.sunset}
+							<SunsetIcon className={classes.sunsetIcon} /> {t("current-weather:sunset-at")} {props.sunset}
 						</Typography>
 					</Typography>
 				</Grid>
@@ -99,35 +101,35 @@ export const CurrentWeather: React.FC<ICurrentWeatherProps> = memo((props) => {
 						<ListItemIcon>
 							<DownIcon />
 						</ListItemIcon>
-						<ListItemText primary={`${props.pressure} hPa`} secondary="Atmospheric pressure" />
+						<ListItemText primary={`${props.pressure} hPa`} secondary={t("current-weather:atmospheric-pressure")} />
 					</ListItem>
 					<Divider />
 					<ListItem>
 						<ListItemIcon>
 							<DropIcon />
 						</ListItemIcon>
-						<ListItemText primary={`${props.humidity} %`} secondary="Humidity" />
+						<ListItemText primary={`${props.humidity} %`} secondary={t("current-weather:humidity")} />
 					</ListItem>
 					<Divider />
 					<ListItem>
 						<ListItemIcon>
 							<CloudIcon />
 						</ListItemIcon>
-						<ListItemText primary={`${props.clouds} %`} secondary="Clouds" />
+						<ListItemText primary={`${props.clouds} %`} secondary={t("current-weather:clouds")} />
 					</ListItem>
 					<Divider />
 					<ListItem>
 						<ListItemIcon>
 							<SunIcon />
 						</ListItemIcon>
-						<ListItemText primary={props.uvIndex} secondary="Midday UV Index" />
+						<ListItemText primary={props.uvIndex} secondary={t("current-weather:uv-index")} />
 					</ListItem>
 					<Divider />
 					<ListItem>
 						<ListItemIcon>
 							<VisibilityIcon />
 						</ListItemIcon>
-						<ListItemText primary={`${props.visibility} m`} secondary="Visibility" />
+						<ListItemText primary={`${props.visibility} ${t("units:m")}`} secondary={t("current-weather:visibility")} />
 					</ListItem>
 					<Divider />
 					{props.rain && (
@@ -136,7 +138,7 @@ export const CurrentWeather: React.FC<ICurrentWeatherProps> = memo((props) => {
 								<ListItemIcon>
 									<RainIcon />
 								</ListItemIcon>
-								<ListItemText primary={`${props.rain} mm`} secondary="Rain last 1 hour" />
+								<ListItemText primary={`${props.rain} ${t("units:mm")}`} secondary={t("current-weather:rain")} />
 							</ListItem>
 							<Divider />
 						</React.Fragment>
@@ -147,7 +149,7 @@ export const CurrentWeather: React.FC<ICurrentWeatherProps> = memo((props) => {
 								<ListItemIcon>
 									<SnowIcon />
 								</ListItemIcon>
-								<ListItemText primary={`${props.snow} mm`} secondary="Snow last 1 hour" />
+								<ListItemText primary={`${props.snow} ${t("units:mm")}`} secondary={t("current-weather:snow")} />
 							</ListItem>
 							<Divider />
 						</React.Fragment>
@@ -156,14 +158,20 @@ export const CurrentWeather: React.FC<ICurrentWeatherProps> = memo((props) => {
 						<ListItemIcon>
 							<SpeedIcon />
 						</ListItemIcon>
-						<ListItemText primary={`${props.windSpeed} m/s`} secondary="Wind speed" />
+						<ListItemText
+							primary={`${props.windSpeed} ${t("units:mps")}`}
+							secondary={t("current-weather:wind-speed")}
+						/>
 					</ListItem>
 					<Divider />
 					<ListItem>
 						<ListItemIcon>
 							<ArrowUpwardIcon className={classes.windDirectionIcon} />
 						</ListItemIcon>
-						<ListItemText primary={getReadableWindDirection(invertedAngle)} secondary="Wind direction" />
+						<ListItemText
+							primary={t(getReadableWindDirection(invertedAngle))}
+							secondary={t("current-weather:wind-direction")}
+						/>
 					</ListItem>
 				</List>
 			</Grid>

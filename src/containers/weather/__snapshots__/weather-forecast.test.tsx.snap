@@ -41,7 +41,7 @@ exports[`Weather forecast container Rendering Should render correctly 1`] = `
                 title="Geolocation is not available"
               >
                 <button
-                  aria-label="get current location"
+                  aria-label="geolocation is not available"
                   class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton MuiIconButton-disabled MuiButtonBase-disabled"
                   disabled=""
                   tabindex="-1"
@@ -68,7 +68,7 @@ exports[`Weather forecast container Rendering Should render correctly 1`] = `
                 title="Search"
               >
                 <button
-                  aria-label="Search"
+                  aria-label="search"
                   class="MuiButtonBase-root MuiIconButton-root makeStyles-iconButton MuiIconButton-disabled MuiButtonBase-disabled"
                   disabled=""
                   tabindex="-1"

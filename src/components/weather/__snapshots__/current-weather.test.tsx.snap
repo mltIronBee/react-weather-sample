@@ -38,7 +38,8 @@ exports[`Current weather component Rendering Should render correctly with rain 1
       <h4
         class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom"
       >
-        Feels like: 
+        Feels like
+        : 
         -6
         °
       </h4>
@@ -62,7 +63,9 @@ exports[`Current weather component Rendering Should render correctly with rain 1
               />
             </svg>
           </span>
-           Sunrise at 
+           
+          Sunrise at
+           
           06:00
         </h5>
         <h5
@@ -82,7 +85,9 @@ exports[`Current weather component Rendering Should render correctly with rain 1
               />
             </svg>
           </span>
-           Sunset at 
+           
+          Sunset at
+           
           18:00
         </h5>
       </span>
@@ -418,7 +423,8 @@ exports[`Current weather component Rendering Should render correctly with snow 1
       <h4
         class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom"
       >
-        Feels like: 
+        Feels like
+        : 
         -6
         °
       </h4>
@@ -442,7 +448,9 @@ exports[`Current weather component Rendering Should render correctly with snow 1
               />
             </svg>
           </span>
-           Sunrise at 
+           
+          Sunrise at
+           
           06:00
         </h5>
         <h5
@@ -462,7 +470,9 @@ exports[`Current weather component Rendering Should render correctly with snow 1
               />
             </svg>
           </span>
-           Sunset at 
+           
+          Sunset at
+           
           18:00
         </h5>
       </span>
@@ -794,7 +804,8 @@ exports[`Current weather component Rendering Should render correctly without rai
       <h4
         class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom"
       >
-        Feels like: 
+        Feels like
+        : 
         -6
         °
       </h4>
@@ -818,7 +829,9 @@ exports[`Current weather component Rendering Should render correctly without rai
               />
             </svg>
           </span>
-           Sunrise at 
+           
+          Sunrise at
+           
           06:00
         </h5>
         <h5
@@ -838,7 +851,9 @@ exports[`Current weather component Rendering Should render correctly without rai
               />
             </svg>
           </span>
-           Sunset at 
+           
+          Sunset at
+           
           18:00
         </h5>
       </span>

@@ -1,0 +1,10 @@
+{
+  "label": "Шукати місто",
+  "location-not-available": "Геолокація недоступна",
+  "location-not-available-aria": "геолокація недоступна",
+  "placeholder": "Введіть місто для пошуку",
+  "search-aria-label": "шукати",
+  "search-tooltip": "Шукати",
+  "use-location-aria-label": "використати поточне місце розташування",
+  "use-location-tooltip": "Використати поточне місце позташування"
+}

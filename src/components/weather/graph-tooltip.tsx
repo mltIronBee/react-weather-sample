@@ -4,11 +4,18 @@ import Typography from "@material-ui/core/Typography";
 import { TooltipProps } from "recharts";
 import { Divider } from "@material-ui/core";
 import useStyles from "@components/weather/graph-tooltip.styles";
+import { useTranslation } from "react-i18next";
+import { DateTime } from "luxon";
 
-const formatName = (name: string): string => (name === "maxTemperature" ? "Max Temperature" : "Min Temperature");
+const formatLabel = (weekday: number, language = "en"): string =>
+	DateTime.local().set({ weekday }).setLocale(language).weekdayLong;
 
 export const GraphTooltip: React.FC<TooltipProps> = (props) => {
 	const classes = useStyles();
+	const {
+		t,
+		i18n: { language },
+	} = useTranslation(["forecast"]);
 
 	if (!props.active || !props.payload) {
 		return null;
@@ -16,14 +23,14 @@ export const GraphTooltip: React.FC<TooltipProps> = (props) => {
 
 	return (
 		<Paper className={classes.container} elevation={4}>
-			<Typography variant="h6">{props.label}</Typography>
+			<Typography variant="h6">{formatLabel(props.label as number, language)}</Typography>
 			<Divider className={classes.divider} />
 			<Typography className={classes.minTemperatureLabel}>
-				{formatName(props.payload[0].name)}: {props.payload[0].value > 0 ? "+" : ""}
+				{t("forecast:tooltip-min")}: {props.payload[0].value > 0 ? "+" : ""}
 				{Math.round(+props.payload[0].value)}
 			</Typography>
 			<Typography className={classes.maxTemperatureLabel}>
-				{formatName(props.payload[1].name)}: {props.payload[1].value > 0 ? "+" : ""}
+				{t("forecast:tooltip-max")}: {props.payload[1].value > 0 ? "+" : ""}
 				{Math.round(+props.payload[1].value)}
 			</Typography>
 		</Paper>

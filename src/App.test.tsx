@@ -15,6 +15,10 @@ describe("App container", () => {
 			forecast: [],
 			errorMessage: "",
 		},
+		geolocation: {
+			lat: null,
+			lng: null,
+		},
 	});
 
 	it("Should render correctly", () => {

@@ -41,6 +41,9 @@
 		"file-loader": "6.1.1",
 		"fs-extra": "^9.0.1",
 		"html-webpack-plugin": "4.5.0",
+		"i18next": "19.8.4",
+		"i18next-browser-languagedetector": "6.0.1",
+		"i18next-http-backend": "1.0.21",
 		"identity-obj-proxy": "3.0.0",
 		"jest": "26.6.0",
 		"jest-circus": "26.6.0",
@@ -59,6 +62,7 @@
 		"react-app-polyfill": "^2.0.0",
 		"react-dev-utils": "^11.0.0",
 		"react-dom": "^17.0.1",
+		"react-i18next": "11.8.1",
 		"react-redux": "7.2.2",
 		"react-refresh": "^0.8.3",
 		"react-swipeable-views": "0.13.9",
@@ -89,7 +93,8 @@
 		"lint:fix": "npx eslint --ext .ts --ext .tsx src/ --fix",
 		"prettier": "npx prettier --check .",
 		"prettier:fix": "npx prettier --write .",
-		"postinstall": "husky install"
+		"postinstall": "husky install",
+		"translations:extract": "NODE_ENV=development npx babel -f .babelrc \"src/**/*.{js,jsx,ts,tsx}\" --ignore \"src/**/*.{test|spec}.{js,jsx,ts,tsx}\",\"src/**/*.stories.{js,jsx,ts,tsx}\",\"src/**/__mocks__/**/*\""
 	},
 	"browserslist": {
 		"production": [
@@ -103,12 +108,8 @@
 			"last 1 safari version"
 		]
 	},
-	"babel": {
-		"presets": [
-			"react-app"
-		]
-	},
 	"devDependencies": {
+		"@babel/cli": "7.12.8",
 		"@storybook/addon-actions": "6.0.28",
 		"@storybook/addon-essentials": "6.0.28",
 		"@storybook/addon-links": "6.0.28",
@@ -120,6 +121,7 @@
 		"@types/redux-mock-store": "1.0.2",
 		"@typescript-eslint/eslint-plugin": "4.6.1",
 		"@typescript-eslint/parser": "4.6.1",
+		"babel-plugin-i18next-extract": "0.8.2",
 		"eslint": "7.13.0",
 		"eslint-config-prettier": "6.15.0",
 		"eslint-import-resolver-typescript": "2.3.0",

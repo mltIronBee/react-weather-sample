@@ -8,6 +8,7 @@ import weatherReducer, {
 	ICurrentWeather,
 } from "@redux/reducers/weather";
 import * as weatherApi from "@services/weather";
+import { DEFAULT_COORDS } from "@utils/test-utils";
 jest.mock("@services/weather");
 
 describe("Weather", () => {
@@ -32,13 +33,13 @@ describe("Weather", () => {
 		windSpeed: 5,
 	};
 	const testForecast: IDailyForecast[] = [
-		{ dayOfWeek: "Monday", minTemperature: 0, maxTemperature: 20 },
-		{ dayOfWeek: "Tuesday", minTemperature: 1, maxTemperature: 21 },
-		{ dayOfWeek: "Wednesday", minTemperature: 2, maxTemperature: 22 },
-		{ dayOfWeek: "Thursday", minTemperature: 3, maxTemperature: 23 },
-		{ dayOfWeek: "Friday", minTemperature: 4, maxTemperature: 24 },
-		{ dayOfWeek: "Saturday", minTemperature: 5, maxTemperature: 25 },
-		{ dayOfWeek: "Sunday", minTemperature: 6, maxTemperature: 26 },
+		{ dayOfWeek: 1, minTemperature: 0, maxTemperature: 20 },
+		{ dayOfWeek: 2, minTemperature: 1, maxTemperature: 21 },
+		{ dayOfWeek: 3, minTemperature: 2, maxTemperature: 22 },
+		{ dayOfWeek: 4, minTemperature: 3, maxTemperature: 23 },
+		{ dayOfWeek: 5, minTemperature: 4, maxTemperature: 24 },
+		{ dayOfWeek: 6, minTemperature: 5, maxTemperature: 25 },
+		{ dayOfWeek: 7, minTemperature: 6, maxTemperature: 26 },
 	];
 
 	describe("Weather actions", () => {
@@ -75,13 +76,22 @@ describe("Weather", () => {
 				type: "weather/getForecastSuccess",
 				payload: { current: testCurrent, forecast: testForecast },
 			};
+			const expectedThirdArgs = {
+				type: "geolocation/getCurrentLocationSuccess",
+				payload: { lat: DEFAULT_COORDS.lat, lng: DEFAULT_COORDS.lng },
+			};
 			const action = fetchWeatherForecast("Odesa");
 
-			await action(dispatchMock, () => ({ weather: { isLoading: false, current: null, forecast: [] } }), {});
+			await action(
+				dispatchMock,
+				() => ({ weather: { isLoading: false, current: null, forecast: [] }, geolocation: { lat: null, lng: null } }),
+				{},
+			);
 
-			expect(dispatchMock).toBeCalledTimes(2);
+			expect(dispatchMock).toBeCalledTimes(3);
 			expect(dispatchMock.mock.calls[0][0]).toEqual(expectedFirstArgs);
 			expect(dispatchMock.mock.calls[1][0]).toEqual(expectedSecondArgs);
+			expect(dispatchMock.mock.calls[2][0]).toEqual(expectedThirdArgs);
 		});
 
 		it("Should dispatch correct actions for failed fetch of forecast", async () => {
@@ -90,7 +100,11 @@ describe("Weather", () => {
 			const expectedSecondArgs = { type: "weather/getForecastError", payload: "Error: Cannot fetch forecast" };
 			const action = fetchWeatherForecast("invalid");
 
-			await action(dispatchMock, () => ({ weather: { isLoading: false, current: null, forecast: [] } }), "");
+			await action(
+				dispatchMock,
+				() => ({ weather: { isLoading: false, current: null, forecast: [] }, geolocation: { lat: null, lng: null } }),
+				"",
+			);
 
 			expect(dispatchMock).toBeCalledTimes(2);
 			expect(dispatchMock.mock.calls[0][0]).toEqual(expectedFirstArgs);

@@ -2,6 +2,7 @@ import * as weatherService from "@services/weather";
 import { ICurrentWeather, IDailyForecast } from "@redux/reducers/weather";
 import * as weatherApi from "@utils/weather-api";
 import * as geolocationApi from "@utils/geolocation-api";
+import { DEFAULT_COORDS } from "@src/utils/test-utils";
 
 jest.mock("@utils/weather-api");
 jest.mock("@utils/geolocation-api");
@@ -116,18 +117,26 @@ describe("Weather service", () => {
 			windSpeed: 7,
 		};
 		const expectedForecast: IDailyForecast[] = [
-			{ dayOfWeek: "Monday", minTemperature: 0, maxTemperature: 25 },
-			{ dayOfWeek: "Tuesday", minTemperature: 1, maxTemperature: 26 },
-			{ dayOfWeek: "Wednesday", minTemperature: 2, maxTemperature: 27 },
-			{ dayOfWeek: "Thursday", minTemperature: 3, maxTemperature: 28 },
-			{ dayOfWeek: "Friday", minTemperature: 4, maxTemperature: 29 },
-			{ dayOfWeek: "Saturday", minTemperature: 5, maxTemperature: 30 },
-			{ dayOfWeek: "Sunday", minTemperature: 6, maxTemperature: 31 },
+			{ dayOfWeek: 1, minTemperature: 0, maxTemperature: 25 },
+			{ dayOfWeek: 2, minTemperature: 1, maxTemperature: 26 },
+			{ dayOfWeek: 3, minTemperature: 2, maxTemperature: 27 },
+			{ dayOfWeek: 4, minTemperature: 3, maxTemperature: 28 },
+			{ dayOfWeek: 5, minTemperature: 4, maxTemperature: 29 },
+			{ dayOfWeek: 6, minTemperature: 5, maxTemperature: 30 },
+			{ dayOfWeek: 7, minTemperature: 6, maxTemperature: 31 },
 		];
 
 		const actual = await weatherService.getWeatherForecast("Odesa");
 
 		expect(actual.current).toEqual(expectedCurrent);
 		expect(actual.forecast).toEqual(expectedForecast);
+	});
+
+	it("Should skip geolocation search, if coordinates are provided to the service", async () => {
+		const spy = jest.spyOn(geolocationApi, "search");
+
+		await weatherService.getWeatherForecast(DEFAULT_COORDS);
+
+		expect(spy).not.toBeCalled();
 	});
 });

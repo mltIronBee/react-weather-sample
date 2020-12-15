@@ -107,7 +107,7 @@ describe("City search input", () => {
 				/>,
 			);
 
-			const geolocationButton = screen.getByLabelText(/^get current location$/i);
+			const geolocationButton = screen.getByLabelText(/^geolocation is not available$/i);
 
 			expect(geolocationButton).toBeDisabled();
 		});
@@ -124,7 +124,7 @@ describe("City search input", () => {
 				/>,
 			);
 
-			const geolocationButton = screen.getByLabelText(/^get current location$/i);
+			const geolocationButton = screen.getByLabelText(/^use current location$/i);
 
 			expect(geolocationButton).not.toBeDisabled();
 		});

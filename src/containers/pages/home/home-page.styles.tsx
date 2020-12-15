@@ -2,10 +2,13 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 
 export default makeStyles((theme: Theme) => ({
 	pageContainer: {
+		[theme.breakpoints.up("md")]: {
+			justifyContent: "center",
+		},
 		flexDirection: "column",
 		width: "100%",
 		minHeight: "100vh",
-		justifyContent: "center",
+		paddingTop: theme.spacing(8),
 	},
 	row: {
 		justifyContent: "center",
@@ -27,5 +30,10 @@ export default makeStyles((theme: Theme) => ({
 		[theme.breakpoints.down("xs")]: {
 			fontSize: "2.1rem",
 		},
+	},
+	languageSelector: {
+		position: "absolute",
+		top: theme.spacing(2),
+		right: theme.spacing(2),
 	},
 }));

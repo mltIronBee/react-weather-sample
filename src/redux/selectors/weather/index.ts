@@ -18,9 +18,9 @@ export const currentWeatherSelector = createSelector(currentSelector, (currentWe
 
 	return {
 		...weather,
-		date: DateTime.fromMillis(weather.date).toLocaleString(DateTime.DATETIME_FULL),
-		sunrise: DateTime.fromMillis(weather.sunrise).toLocaleString(DateTime.TIME_24_SIMPLE),
-		sunset: DateTime.fromMillis(weather.sunset).toLocaleString(DateTime.TIME_24_SIMPLE),
+		date: DateTime.fromMillis(weather.date),
+		sunrise: DateTime.fromMillis(weather.sunrise),
+		sunset: DateTime.fromMillis(weather.sunset),
 		weatherDescription: description,
 		weatherIcon: getWeatherIcon(icon),
 	};

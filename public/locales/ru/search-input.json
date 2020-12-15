@@ -1,0 +1,10 @@
+{
+  "label": "Поиск города",
+  "location-not-available": "Геолокация недоступна",
+  "location-not-available-aria": "геолокация недоступна",
+  "placeholder": "Введите город для поиска",
+  "search-aria-label": "искать",
+  "search-tooltip": "Искать",
+  "use-location-aria-label": "использовать текущее местоположение",
+  "use-location-tooltip": "Использовать текущее местоположение"
+}
