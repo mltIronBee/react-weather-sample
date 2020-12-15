@@ -106,6 +106,7 @@ if (process.env.NODE_ENV === "test") {
 	exports.snackbarReducer = snackbarReducer;
 }
 
+/* istanbul ignore next: no point in testing placeholder functions */
 export const SnackbarContext = createContext<ISnackbarContext>({
 	snackbar: {
 		show: () => null,
