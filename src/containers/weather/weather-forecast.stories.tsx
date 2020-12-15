@@ -6,6 +6,8 @@ import { SnackbarProvider } from "@containers/snackbar";
 import createStore from "@redux/store";
 import { EnhancedStore } from "@reduxjs/toolkit";
 import { AppActions, IAppState } from "@redux/reducers";
+import { DateTime } from "luxon";
+import { DEFAULT_COORDS } from "@utils/test-utils";
 
 const Template: Story<ComponentProps<typeof WeatherForecast> & { store: EnhancedStore<IAppState, AppActions> }> = (
 	props,
@@ -16,11 +18,19 @@ const Template: Story<ComponentProps<typeof WeatherForecast> & { store: Enhanced
 );
 
 const defaultStore = createStore();
-const loadingStore = createStore({ weather: { isLoading: true, current: null, forecast: [], errorMessage: "" } });
+const loadingStore = createStore({
+	geolocation: { lat: null, lng: null },
+	weather: { isLoading: true, current: null, forecast: [], errorMessage: "" },
+});
 const errorStore = createStore({
+	geolocation: { lat: null, lng: null },
 	weather: { isLoading: false, current: null, forecast: [], errorMessage: "Error: Failed to fetch forecast" },
 });
 const loadedStore = createStore({
+	geolocation: {
+		lat: DEFAULT_COORDS.lat,
+		lng: DEFAULT_COORDS.lng,
+	},
 	weather: {
 		isLoading: false,
 		errorMessage: "",
@@ -45,13 +55,13 @@ const loadedStore = createStore({
 			windSpeed: 5,
 		},
 		forecast: [
-			{ dayOfWeek: "Monday", minTemperature: -5, maxTemperature: -1 },
-			{ dayOfWeek: "Tuesday", minTemperature: -3, maxTemperature: 11 },
-			{ dayOfWeek: "Wednesday", minTemperature: 4, maxTemperature: 9 },
-			{ dayOfWeek: "Thursday", minTemperature: 4, maxTemperature: 9 },
-			{ dayOfWeek: "Friday", minTemperature: 4, maxTemperature: 9 },
-			{ dayOfWeek: "Saturday", minTemperature: 2, maxTemperature: 8 },
-			{ dayOfWeek: "Sunday", minTemperature: 1, maxTemperature: 8 },
+			{ dayOfWeek: DateTime.local().set({ weekday: 1 }).toMillis(), minTemperature: -5, maxTemperature: -1 },
+			{ dayOfWeek: DateTime.local().set({ weekday: 2 }).toMillis(), minTemperature: -3, maxTemperature: 11 },
+			{ dayOfWeek: DateTime.local().set({ weekday: 3 }).toMillis(), minTemperature: 4, maxTemperature: 9 },
+			{ dayOfWeek: DateTime.local().set({ weekday: 4 }).toMillis(), minTemperature: 4, maxTemperature: 9 },
+			{ dayOfWeek: DateTime.local().set({ weekday: 5 }).toMillis(), minTemperature: 4, maxTemperature: 9 },
+			{ dayOfWeek: DateTime.local().set({ weekday: 6 }).toMillis(), minTemperature: 2, maxTemperature: 8 },
+			{ dayOfWeek: DateTime.local().set({ weekday: 7 }).toMillis(), minTemperature: 1, maxTemperature: 8 },
 		],
 	},
 });

@@ -5,10 +5,17 @@ import { TooltipProps } from "recharts";
 import { Divider } from "@material-ui/core";
 import useStyles from "@components/weather/graph-tooltip.styles";
 import { useTranslation } from "react-i18next";
+import { DateTime } from "luxon";
+
+const formatLabel = (weekday: number, language = "en"): string =>
+	DateTime.local().set({ weekday }).setLocale(language).weekdayLong;
 
 export const GraphTooltip: React.FC<TooltipProps> = (props) => {
 	const classes = useStyles();
-	const { t } = useTranslation(["forecast"]);
+	const {
+		t,
+		i18n: { language },
+	} = useTranslation(["forecast"]);
 
 	if (!props.active || !props.payload) {
 		return null;
@@ -16,7 +23,7 @@ export const GraphTooltip: React.FC<TooltipProps> = (props) => {
 
 	return (
 		<Paper className={classes.container} elevation={4}>
-			<Typography variant="h6">{props.label}</Typography>
+			<Typography variant="h6">{formatLabel(props.label as number, language)}</Typography>
 			<Divider className={classes.divider} />
 			<Typography className={classes.minTemperatureLabel}>
 				{t("forecast:tooltip-min")}: {props.payload[0].value > 0 ? "+" : ""}

@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import { getDefaultMiddleware } from "@reduxjs/toolkit";
-import { render, screen, fireEvent, waitFor } from "@utils/test-utils";
+import { render, screen, fireEvent, waitFor, DEFAULT_COORDS } from "@utils/test-utils";
 import { WeatherForecast } from "@containers/weather/weather-forecast";
 import * as SnackbarApi from "@containers/snackbar";
 import { AppActions, IAppState } from "@redux/reducers";
@@ -10,10 +10,12 @@ import { IForecastGraphProps } from "@components/weather/forecast-graph";
 import * as weatherService from "@services/weather";
 import * as geolocationService from "@services/geolocation";
 import { ICurrentWeather } from "@redux/reducers/weather";
+import * as reactI18next from "react-i18next";
 
 jest.mock("recharts");
 jest.mock("@services/weather");
 jest.mock("@containers/snackbar/snackbar-context");
+jest.mock("react-i18next");
 
 describe("Weather forecast container", () => {
 	const testCurrent: ICurrentWeather = {
@@ -37,13 +39,13 @@ describe("Weather forecast container", () => {
 		windSpeed: 5,
 	};
 	const testData: IForecastGraphProps["data"] = [
-		{ dayOfWeek: "Monday", minTemperature: 5, maxTemperature: 13 },
-		{ dayOfWeek: "Tuesday", minTemperature: 3, maxTemperature: 11 },
-		{ dayOfWeek: "Wednesday", minTemperature: 4, maxTemperature: 9 },
-		{ dayOfWeek: "Thursday", minTemperature: 4, maxTemperature: 9 },
-		{ dayOfWeek: "Friday", minTemperature: 4, maxTemperature: 9 },
-		{ dayOfWeek: "Saturday", minTemperature: 2, maxTemperature: 8 },
-		{ dayOfWeek: "Sunday", minTemperature: 1, maxTemperature: 8 },
+		{ dayOfWeek: 1, minTemperature: 5, maxTemperature: 13 },
+		{ dayOfWeek: 2, minTemperature: 3, maxTemperature: 11 },
+		{ dayOfWeek: 3, minTemperature: 4, maxTemperature: 9 },
+		{ dayOfWeek: 4, minTemperature: 4, maxTemperature: 9 },
+		{ dayOfWeek: 5, minTemperature: 4, maxTemperature: 9 },
+		{ dayOfWeek: 6, minTemperature: 2, maxTemperature: 8 },
+		{ dayOfWeek: 7, minTemperature: 1, maxTemperature: 8 },
 	];
 
 	describe("Rendering", () => {
@@ -56,6 +58,10 @@ describe("Weather forecast container", () => {
 					current: testCurrent,
 					forecast: testData,
 					errorMessage: "",
+				},
+				geolocation: {
+					lat: DEFAULT_COORDS.lat,
+					lng: DEFAULT_COORDS.lng,
 				},
 			});
 
@@ -92,6 +98,10 @@ describe("Weather forecast container", () => {
 						forecast: [],
 						errorMessage: "",
 					},
+					geolocation: {
+						lat: null,
+						lng: null,
+					},
 				});
 				const testCity = "Odesa";
 
@@ -109,10 +119,14 @@ describe("Weather forecast container", () => {
 				const expectedActions = [
 					{ type: "weather/getForecastStart" },
 					{ type: "weather/getForecastSuccess", payload: { current: testCurrent, forecast: testData } },
+					{
+						type: "geolocation/getCurrentLocationSuccess",
+						payload: { lat: DEFAULT_COORDS.lat, lng: DEFAULT_COORDS.lng },
+					},
 				];
 				const actualActions = store.getActions();
 
-				expect(weatherServiceSpy).toBeCalledWith(testCity);
+				expect(weatherServiceSpy).toBeCalledWith(testCity, "en");
 				expect(actualActions).toEqual(expectedActions);
 			});
 
@@ -123,6 +137,10 @@ describe("Weather forecast container", () => {
 						current: null,
 						forecast: [],
 						errorMessage: "",
+					},
+					geolocation: {
+						lat: null,
+						lng: null,
 					},
 				});
 				const testCity = "Odesa";
@@ -144,10 +162,14 @@ describe("Weather forecast container", () => {
 				const expectedActions = [
 					{ type: "weather/getForecastStart" },
 					{ type: "weather/getForecastSuccess", payload: { current: testCurrent, forecast: testData } },
+					{
+						type: "geolocation/getCurrentLocationSuccess",
+						payload: { lat: DEFAULT_COORDS.lat, lng: DEFAULT_COORDS.lng },
+					},
 				];
 				const actualActions = store.getActions();
 
-				expect(weatherServiceSpy).toBeCalledWith(testCity);
+				expect(weatherServiceSpy).toBeCalledWith(testCity, "en");
 				expect(actualActions).toEqual(expectedActions);
 			});
 
@@ -158,6 +180,10 @@ describe("Weather forecast container", () => {
 						current: null,
 						forecast: [],
 						errorMessage: "",
+					},
+					geolocation: {
+						lat: null,
+						lng: null,
 					},
 				});
 				const testCity = "invalid";
@@ -179,7 +205,7 @@ describe("Weather forecast container", () => {
 				];
 				const actualActions = store.getActions();
 
-				expect(weatherServiceSpy).toBeCalledWith(testCity);
+				expect(weatherServiceSpy).toBeCalledWith(testCity, "en");
 				expect(actualActions).toEqual(expectedActions);
 			});
 
@@ -193,6 +219,10 @@ describe("Weather forecast container", () => {
 						forecast: [],
 						errorMessage: "",
 					},
+					geolocation: {
+						lat: null,
+						lng: null,
+					},
 				});
 				const errorStore = createStore({
 					weather: {
@@ -200,6 +230,10 @@ describe("Weather forecast container", () => {
 						current: null,
 						forecast: [],
 						errorMessage: testError,
+					},
+					geolocation: {
+						lat: null,
+						lng: null,
 					},
 				});
 
@@ -239,6 +273,10 @@ describe("Weather forecast container", () => {
 					current: null,
 					forecast: [],
 					errorMessage: "",
+				},
+				geolocation: {
+					lat: null,
+					lng: null,
 				},
 			});
 			const getLocationSpy = jest.spyOn(geolocationService, "getCurrentLocation");
@@ -340,6 +378,67 @@ describe("Weather forecast container", () => {
 			});
 		});
 
+		describe("Re-fetching data on language changes", () => {
+			beforeEach(() => {
+				(reactI18next as any)._resetLanguage();
+			});
+
+			it("Should re-fetch weather data, if language was changed, and already loaded current weather", async () => {
+				const createStore = configureStore<IAppState>(middleware);
+				const testStore = createStore({
+					weather: {
+						isLoading: false,
+						errorMessage: "",
+						forecast: [],
+						current: {
+							clouds: 0,
+							date: Date.now(),
+							feelsLike: 0,
+							humidity: 0,
+							pressure: 0,
+							sunrise: Date.now(),
+							sunset: Date.now(),
+							temperature: 0,
+							uvIndex: 0,
+							visibility: 0,
+							weather: {
+								id: 0,
+								description: "clear sky",
+								icon: "01d",
+								main: "Clear",
+							},
+							windDeg: 0,
+							windSpeed: 0,
+						},
+					},
+					geolocation: {
+						lat: DEFAULT_COORDS.lat,
+						lng: DEFAULT_COORDS.lng,
+					},
+				});
+
+				const { rerender } = render(
+					<Provider store={testStore}>
+						<WeatherForecast />
+					</Provider>,
+				);
+
+				const newLang = "uk";
+
+				(reactI18next as any)._changeLanguage(newLang);
+
+				rerender(
+					<Provider store={testStore}>
+						<WeatherForecast />
+					</Provider>,
+				);
+
+				await waitFor(() =>
+					expect((weatherService as any)._getWeatherForecastSpy).toBeCalledWith(DEFAULT_COORDS, newLang),
+				);
+			});
+		});
+
 		describe("Controls appearance", () => {
 			it("Should disable current weather tab, when current weather is not loaded", () => {
 				const createStore = configureStore<IAppState>(middleware);
@@ -349,6 +448,10 @@ describe("Weather forecast container", () => {
 						current: null,
 						forecast: [],
 						errorMessage: "",
+					},
+					geolocation: {
+						lat: null,
+						lng: null,
 					},
 				});
 

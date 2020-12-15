@@ -1,6 +1,10 @@
 {
-	"plugins": [
-		["i18next-extract", { "locales": ["en", "ru", "uk"], "outputPath": "public/locales/{{locale}}/{{ns}}.json" }]
-	],
+	"env": {
+		"development": {
+			"plugins": [
+				["i18next-extract", { "locales": ["en", "ru", "uk"], "outputPath": "public/locales/{{locale}}/{{ns}}.json" }]
+			]
+		}
+	},
 	"presets": ["react-app"]
 }

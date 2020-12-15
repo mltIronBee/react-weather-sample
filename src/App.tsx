@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { HomePage } from "@src/containers/pages/home";
+import { HomePage } from "@containers/pages/home";
 import { ThemeProvider } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CssBaseline from "@material-ui/core/CssBaseline";

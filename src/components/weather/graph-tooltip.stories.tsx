@@ -8,7 +8,7 @@ export const Default = Template.bind({});
 
 Default.args = {
 	active: true,
-	label: "Monday",
+	label: 1,
 	payload: [
 		{ name: "Min temperature", value: -5 },
 		{ name: "Max temperature", value: 5 },

@@ -9,7 +9,7 @@ describe("Graph tooltip", () => {
 			const { container } = render(
 				<GraphTooltip
 					active
-					label="Test label"
+					label={1}
 					payload={[
 						{ name: "Test name 1", value: 10 },
 						{ name: "Test name 2", value: -10 },

@@ -40,13 +40,32 @@ interface IUseTranslation {
 	};
 }
 
-const useTranslation = (): IUseTranslation => {
-	const [language, changeLanguage] = useState("en");
+let language = "en";
 
-	return { t: translate, i18n: { language, changeLanguage } };
+const _resetLanguage = (): void => {
+	language = "en";
+};
+
+const _changeLanguage = (lang: string): void => {
+	language = lang;
+};
+
+const useTranslation = (): IUseTranslation => {
+	const [, setCounter] = useState(0);
+
+	const handleLanguageChange = (lang: string): void => {
+		setCounter((prev) => prev + 1);
+		_changeLanguage(lang);
+	};
+
+	const getLanguage = (): string => language;
+
+	return { t: translate, i18n: { language: getLanguage(), changeLanguage: handleLanguageChange } };
 };
 
 module.exports = {
 	...reactI18nextMock,
 	useTranslation,
+	_resetLanguage,
+	_changeLanguage,
 };

@@ -14,14 +14,15 @@ import Typography from "@material-ui/core/Typography";
 import blue from "@material-ui/core/colors/blue";
 import amber from "@material-ui/core/colors/amber";
 import SearchIcon from "@material-ui/icons/Search";
-import { LoadingComponent } from "@components/common";
 import useStyles from "@components/weather/forecast-graph.styles";
-import { GraphTooltip } from "@src/components/weather/graph-tooltip";
+import { GraphTooltip } from "@components/weather/graph-tooltip";
 import { useTranslation } from "react-i18next";
+import { DateTime } from "luxon";
+import { LoadingComponent } from "@components/common";
 
 export interface IForecastGraphProps {
 	data: {
-		dayOfWeek: string;
+		dayOfWeek: number;
 		minTemperature: number;
 		maxTemperature: number;
 	}[];
@@ -29,11 +30,17 @@ export interface IForecastGraphProps {
 	hasError?: boolean;
 }
 
+const formatXAxisTick = (weekday: number, language = "en"): string =>
+	DateTime.local().set({ weekday }).setLocale(language).weekdayShort;
+
 export const ForecastGraph: React.FC<IForecastGraphProps> = memo(({ data, loading = false, hasError = false }) => {
 	const classes = useStyles();
 	const minFillColor = blue[600];
 	const maxFillColor = amber[900];
-	const { t } = useTranslation(["forecast", "common"]);
+	const {
+		t,
+		i18n: { language },
+	} = useTranslation(["forecast", "common"]);
 
 	if (hasError) {
 		return (
@@ -68,7 +75,7 @@ export const ForecastGraph: React.FC<IForecastGraphProps> = memo(({ data, loadin
 		<LoadingComponent loading={loading}>
 			<ResponsiveContainer>
 				<BarChart data={data} margin={{ right: 16 }}>
-					<XAxis tickFormatter={(value) => value.slice(0, 3)} dataKey="dayOfWeek" />
+					<XAxis tickFormatter={(value: number) => formatXAxisTick(value, language)} dataKey="dayOfWeek" />
 					<YAxis tickFormatter={(value) => `${value > 0 ? "+" : ""}${value}°`} />
 					<Tooltip content={<GraphTooltip />} />
 					<Legend

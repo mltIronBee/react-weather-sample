@@ -1,5 +1,7 @@
 import { ICurrentWeather, IDailyForecast } from "@redux/reducers/weather";
 import { IWeatherForecastResponse } from "@services/weather";
+import { ILatLng } from "@src/services/geolocation";
+import { DEFAULT_COORDS } from "@utils/test-utils";
 
 let testCurrent: ICurrentWeather = {
 	clouds: 0,
@@ -25,16 +27,26 @@ let testForecast: IDailyForecast[] = [];
 
 export const _getWeatherForecastSpy = jest.fn();
 
-export const getWeatherForecast = async (city: string | number): Promise<IWeatherForecastResponse> => {
+export const getWeatherForecast = async (
+	city: string | ILatLng,
+	language?: string,
+): Promise<IWeatherForecastResponse> => {
 	// For some reason, when trying to spy on manual mock, it completely overwrites implementation with no-op function
 	// To prevent this, and to be able keep mocked implementation along with call history we're calling separate mock
 	// function, which just keeps calling history, while mock implementation remains intact
-	_getWeatherForecastSpy(city);
-	if (city === "invalid") {
+	_getWeatherForecastSpy(city, language);
+	if (
+		city === "invalid" ||
+		(typeof city !== "string" && city.lat !== DEFAULT_COORDS.lat && city.lng !== DEFAULT_COORDS.lng)
+	) {
 		throw new Error("Cannot fetch forecast");
 	}
 
-	return { current: testCurrent, forecast: testForecast };
+	return {
+		current: testCurrent,
+		forecast: testForecast,
+		location: { lat: DEFAULT_COORDS.lat, lng: DEFAULT_COORDS.lng },
+	};
 };
 
 export const _setMockData = (data: { forecast?: IDailyForecast[]; current?: ICurrentWeather }): void => {

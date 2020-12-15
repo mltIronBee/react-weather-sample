@@ -77,9 +77,9 @@ export interface IGetForecastResponse {
 }
 /* eslint-enable camelcase */
 
-export const getForecast = (lat: number, lon: number): AxiosPromise<IGetForecastResponse> =>
+export const getForecast = (lat: number, lon: number, language?: string): AxiosPromise<IGetForecastResponse> =>
 	instance.get("/onecall", {
-		params: { lat, lon, units: "metric", exclude: "minutely,hourly,alerts", appid: WEATHER_API_KEY },
+		params: { lat, lon, units: "metric", exclude: "minutely,hourly,alerts", appid: WEATHER_API_KEY, lang: language },
 	});
 
 export const getWeatherIcon = (icon: string): string => `http://openweathermap.org/img/wn/${icon}@2x.png`;

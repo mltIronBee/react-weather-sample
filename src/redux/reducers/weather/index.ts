@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "@redux/store";
 import { getWeatherForecast } from "@services/weather";
+import { getCurrentLocationSuccess } from "@redux/reducers/geolocation";
+import { ILatLng } from "@services/geolocation";
 
 export interface IDailyForecast {
 	readonly minTemperature: number;
 	readonly maxTemperature: number;
-	readonly dayOfWeek: string;
+	readonly dayOfWeek: number;
 }
 
 export interface ICurrentWeather {
@@ -71,13 +73,16 @@ export type WeatherActions =
 	| ReturnType<typeof getForecastError>
 	| ReturnType<typeof getForecastSuccess>;
 
-export const fetchWeatherForecast = (city: string): AppThunk<Promise<void>> => async (dispatch) => {
+export const fetchWeatherForecast = (location: string | ILatLng, language?: string): AppThunk<Promise<void>> => async (
+	dispatch,
+) => {
 	dispatch(getForecastStart());
 
 	try {
-		const forecast = await getWeatherForecast(city);
+		const { location: coordinates, current, forecast } = await getWeatherForecast(location, language);
 
-		dispatch(getForecastSuccess(forecast));
+		dispatch(getForecastSuccess({ current, forecast }));
+		dispatch(getCurrentLocationSuccess(coordinates));
 	} catch (error) {
 		dispatch(getForecastError(error.toString()));
 	}
