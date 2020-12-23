@@ -87,6 +87,7 @@
 		"build": "node scripts/build.js",
 		"test": "node scripts/test.js",
 		"test:coverage": "node scripts/test.js --coverage",
+		"test:diff:coverage": "node scripts/test.js --changedSince develop --coverage",
 		"storybook": "start-storybook -p 6006 --no-dll --ci",
 		"build-storybook": "build-storybook --no-dll",
 		"lint": "npx eslint --ext .ts --ext .tsx src/",

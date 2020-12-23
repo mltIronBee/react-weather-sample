@@ -6,5 +6,5 @@ coverage:
         threshold: 3% # the leniency in hitting the target
     patch:
       default:
-        target: 95%
-        threshold: 3%
+        target: 85%
+        threshold: 15%
